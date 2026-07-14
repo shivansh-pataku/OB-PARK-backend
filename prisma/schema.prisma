@@ -1,0 +1,54 @@
+// ====================================================================================
+// DATABASE CONNECTION BLOCK
+// ====================================================================================
+
+    datasource db {
+
+      provider = "postgresql"     //    database management system being used (e.g., postgresql, mysql, sqlite, mongodb)
+      // url      = env("DATABASE_URL") //  database's secure password waala connection path being pulled from env  - will mot be used in this version
+    }
+
+// ====================================================================================
+// PRISMA CLIENT GENERATOR BLOCK
+// ====================================================================================
+
+generator client {
+  provider = "prisma-client" // Prisma ORM should generate types and methods for JavaScript/TypeScript
+  output   = "../src/generated/prisma"
+}
+
+// ========================================================
+// Database tables from here
+// ========================================================
+
+//// Actual users table ----------------------------------
+
+
+model Users {
+  id               String   @id @default(uuid())
+
+  phoneNumber      String   @unique
+  email            String?  @unique
+
+  firstName        String?
+  lastName         String?
+
+  isActive         Boolean  @default(true)
+
+  refreshTokenHash String?
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+//// newsletter table  temporary ----------------------------------
+
+model User {
+  id               String   @id @default(uuid())
+  firstName        String
+  lastName         String
+  email            String   @unique
+  isNewsletterSub  Boolean  @default(true)  
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt       
+}

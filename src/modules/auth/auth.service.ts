@@ -47,17 +47,23 @@ export class AuthService {
   // Login
   // =====================================================
 
-  async login(dto: LoginDto) {
-    // Temporary mock until Firebase is connected
-    const firebaseUser = {
-      uid: 'test_uid',
-      phoneNumber: '9816045869',
-    };
+  /// testing function for login, will be removed once firebase is connected
 
-    // const firebaseUser =
-    // await this.firebaseService.verifyIdToken(
-    //   dto.firebaseIdToken,
-    // );
+  async login(dto: LoginDto) {
+
+  /// Temporary mock until Firebase is connected
+
+  //   const firebaseUser = {
+  //     uid: 'test_uid',
+  //     phoneNumber: '9816045869',
+  //   };
+
+  /// Actual login function
+
+    const firebaseUser =
+    await this.firebaseService.verifyIdToken(
+      dto.firebaseIdToken,
+    );
 
     let user = await this.usersService.findByPhoneNumber(
       firebaseUser.phoneNumber,

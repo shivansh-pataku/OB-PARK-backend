@@ -56,3 +56,7 @@ pids
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 /generated/prisma
+
+
+firebase-admin-key.json
+obpark-21-firebase-adminsdk-fbsvc-88b5fb6c08.json

@@ -1,4 +1,5 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Req } from '@nestjs/common';
+import { Request } from 'express';
 
 import { AuthService } from './auth.service';
 
@@ -23,7 +24,12 @@ export class AuthController {
   @Post('login')
   login(
     @Body() dto: LoginDto,
+    @Req() req: Request,
   ) {
+    console.log('=== DEBUG LOGIN ===');
+    console.log('dto:', dto);
+    console.log('req.body:', req.body);
+    console.log('req.headers:', req.headers);
     return this.authService.login(dto);
   }
 

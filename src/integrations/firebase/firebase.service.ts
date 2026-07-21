@@ -36,6 +36,8 @@ export class FirebaseService implements OnModuleInit {
     // Enable a mock bypass in non-production environments when a mock token is provided
     if (
       this.configService.get<string>('NODE_ENV') !== 'production' &&
+      firebaseIdToken &&
+      typeof firebaseIdToken === 'string' &&
       firebaseIdToken.startsWith('mock-token')
     ) {
       // Extract the phone number if specified, e.g. mock-token-919999999999, or use a default
@@ -45,6 +47,7 @@ export class FirebaseService implements OnModuleInit {
       console.log(`[FirebaseService] Bypassing verification. Returning mock user with phone number: ${phoneNumber}`);
       return {
         uid: 'mock_uid_12345',
+        phone_number: phoneNumber,
         phoneNumber: phoneNumber,
         firebase: {
           sign_in_provider: 'phone',

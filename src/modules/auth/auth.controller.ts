@@ -24,12 +24,7 @@ export class AuthController {
   @Post('login')
   login(
     @Body() dto: LoginDto,
-    @Req() req: Request,
   ) {
-    console.log('=== DEBUG LOGIN ===');
-    console.log('dto:', dto);
-    console.log('req.body:', req.body);
-    console.log('req.headers:', req.headers);
     return this.authService.login(dto);
   }
 

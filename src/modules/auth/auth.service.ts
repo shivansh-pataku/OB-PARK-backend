@@ -65,13 +65,19 @@ export class AuthService {
       dto.firebaseIdToken,
     );
 
+    const phoneNumber = firebaseUser.phone_number || firebaseUser.phoneNumber;
+
+    if (!phoneNumber) {
+      throw new UnauthorizedException('Phone number not found in Firebase token.');
+    }
+
     let user = await this.usersService.findByPhoneNumber(
-      firebaseUser.phoneNumber,
+      phoneNumber,
     );
 
     if (!user) {
       user = await this.usersService.createUser(
-        firebaseUser.phoneNumber,
+        phoneNumber,
       );
     }
 

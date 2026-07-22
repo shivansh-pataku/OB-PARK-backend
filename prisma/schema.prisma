@@ -34,7 +34,7 @@ model Users {
   phoneNumber      String    @unique
   email            String?   @unique
   firstName        String?
-  lastName         String?
+  lastName         String? 
   address          String?
   dob              DateTime?
   gender           Gender?

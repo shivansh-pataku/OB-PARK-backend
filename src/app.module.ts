@@ -9,21 +9,23 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 
 @Module({
-  imports: [
-  ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: '.env',
-      load: [configuration],
-      validate,
-      cache: true,
-      expandVariables: true,
-}),
-  PrismaModule, FirebaseModule, AuthModule, UsersModule,], 
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
-  ],
+
+      imports: [
+      ConfigModule.forRoot({
+          isGlobal: true,
+          envFilePath: '.env',
+          load: [configuration],
+          validate,
+          cache: true,
+          expandVariables: true,
+        }),
+      PrismaModule, FirebaseModule, AuthModule, UsersModule,],
+
+      providers: [
+        {
+          provide: APP_GUARD,
+          useClass: JwtAuthGuard,
+        },
+      ],
 })
 export class AppModule {}

@@ -23,22 +23,26 @@ generator client {
 
 //// Actual users table ----------------------------------
 
-
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  PREFER_NOT_TO_SAY
+}
 model Users {
-  id               String   @id @default(uuid())
-
-  phoneNumber      String   @unique
-  email            String?  @unique
-
+  id               String    @id @default(uuid())
+  phoneNumber      String    @unique
+  email            String?   @unique
   firstName        String?
   lastName         String?
-
-  isActive         Boolean  @default(true)
-
+  address          String?
+  dob              DateTime?
+  gender           Gender?
+  profileImage     String?
+  isActive         Boolean   @default(true)
   refreshTokenHash String?
-
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 }
 
 //// newsletter table  temporary ----------------------------------

@@ -116,5 +116,48 @@ return {
   ),
 };
 }
+
+
+
+
+async deleteProfilePhoto(
+  userId: string,
+) {
+  // Find current user
+  const user = await this.prisma.users.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      profileImage: true,
+    },
+  });
+
+  // Nothing to delete
+  if (!user?.profileImage) {
+    return {
+      message: 'No profile photo found.',
+    };
+  }
+
+  // Delete image from storage
+  await this.storageService.deleteProfileImage(
+    user.profileImage,
+  );
+
+  // Remove image reference from database
+  await this.prisma.users.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      profileImage: null,
+    },
+  });
+
+  return {
+    message: 'Profile photo deleted successfully.',
+  };
+}
  
 }

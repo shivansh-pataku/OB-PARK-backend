@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Patch,
+  Delete,
   Body,
   UseGuards,
   UseInterceptors,
@@ -102,5 +103,17 @@ export class ProfileController {
         user.sub,
         file,
       );
+  }
+
+  @Delete('photo')
+  @ApiOperation({
+    summary: 'Delete profile photo',
+  })
+  deleteProfilePhoto(
+    @CurrentUser() user: any,
+  ) {
+    return this.profileService.deleteProfilePhoto(
+      user.sub,
+    );
   }
   }

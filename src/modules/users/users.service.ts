@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma/prisma.service';
 // import { UpdateProfileDto } from './dto/update-profile.dto';
-import { UpdateProfileDto } from '../auth/dto/update-profile.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 
 
 @Injectable()
@@ -26,14 +26,14 @@ export class UsersService {
     });
   }
 
-  async updateProfile(id: string, dto: UpdateProfileDto) {
-    return this.prisma.users.update({
-      where: {
-        id,
-      },
-      data: dto,
-    });
-  }
+  // async updateProfile(id: string, dto: UpdateProfileDto) {
+  //   return this.prisma.users.update({
+  //     where: {
+  //       id,
+  //     },
+  //     data: dto,
+  //   });
+  // }
 
   async updateRefreshToken(
   id: string,

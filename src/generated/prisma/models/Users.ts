@@ -30,6 +30,10 @@ export type UsersMinAggregateOutputType = {
   email: string | null
   firstName: string | null
   lastName: string | null
+  address: string | null
+  dob: Date | null
+  gender: $Enums.Gender | null
+  profileImage: string | null
   isActive: boolean | null
   refreshTokenHash: string | null
   createdAt: Date | null
@@ -42,6 +46,10 @@ export type UsersMaxAggregateOutputType = {
   email: string | null
   firstName: string | null
   lastName: string | null
+  address: string | null
+  dob: Date | null
+  gender: $Enums.Gender | null
+  profileImage: string | null
   isActive: boolean | null
   refreshTokenHash: string | null
   createdAt: Date | null
@@ -54,6 +62,10 @@ export type UsersCountAggregateOutputType = {
   email: number
   firstName: number
   lastName: number
+  address: number
+  dob: number
+  gender: number
+  profileImage: number
   isActive: number
   refreshTokenHash: number
   createdAt: number
@@ -68,6 +80,10 @@ export type UsersMinAggregateInputType = {
   email?: true
   firstName?: true
   lastName?: true
+  address?: true
+  dob?: true
+  gender?: true
+  profileImage?: true
   isActive?: true
   refreshTokenHash?: true
   createdAt?: true
@@ -80,6 +96,10 @@ export type UsersMaxAggregateInputType = {
   email?: true
   firstName?: true
   lastName?: true
+  address?: true
+  dob?: true
+  gender?: true
+  profileImage?: true
   isActive?: true
   refreshTokenHash?: true
   createdAt?: true
@@ -92,6 +112,10 @@ export type UsersCountAggregateInputType = {
   email?: true
   firstName?: true
   lastName?: true
+  address?: true
+  dob?: true
+  gender?: true
+  profileImage?: true
   isActive?: true
   refreshTokenHash?: true
   createdAt?: true
@@ -177,6 +201,10 @@ export type UsersGroupByOutputType = {
   email: string | null
   firstName: string | null
   lastName: string | null
+  address: string | null
+  dob: Date | null
+  gender: $Enums.Gender | null
+  profileImage: string | null
   isActive: boolean
   refreshTokenHash: string | null
   createdAt: Date
@@ -210,6 +238,10 @@ export type UsersWhereInput = {
   email?: Prisma.StringNullableFilter<"Users"> | string | null
   firstName?: Prisma.StringNullableFilter<"Users"> | string | null
   lastName?: Prisma.StringNullableFilter<"Users"> | string | null
+  address?: Prisma.StringNullableFilter<"Users"> | string | null
+  dob?: Prisma.DateTimeNullableFilter<"Users"> | Date | string | null
+  gender?: Prisma.EnumGenderNullableFilter<"Users"> | $Enums.Gender | null
+  profileImage?: Prisma.StringNullableFilter<"Users"> | string | null
   isActive?: Prisma.BoolFilter<"Users"> | boolean
   refreshTokenHash?: Prisma.StringNullableFilter<"Users"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Users"> | Date | string
@@ -222,6 +254,10 @@ export type UsersOrderByWithRelationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   firstName?: Prisma.SortOrderInput | Prisma.SortOrder
   lastName?: Prisma.SortOrderInput | Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  dob?: Prisma.SortOrderInput | Prisma.SortOrder
+  gender?: Prisma.SortOrderInput | Prisma.SortOrder
+  profileImage?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   refreshTokenHash?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -237,6 +273,10 @@ export type UsersWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UsersWhereInput | Prisma.UsersWhereInput[]
   firstName?: Prisma.StringNullableFilter<"Users"> | string | null
   lastName?: Prisma.StringNullableFilter<"Users"> | string | null
+  address?: Prisma.StringNullableFilter<"Users"> | string | null
+  dob?: Prisma.DateTimeNullableFilter<"Users"> | Date | string | null
+  gender?: Prisma.EnumGenderNullableFilter<"Users"> | $Enums.Gender | null
+  profileImage?: Prisma.StringNullableFilter<"Users"> | string | null
   isActive?: Prisma.BoolFilter<"Users"> | boolean
   refreshTokenHash?: Prisma.StringNullableFilter<"Users"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Users"> | Date | string
@@ -249,6 +289,10 @@ export type UsersOrderByWithAggregationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   firstName?: Prisma.SortOrderInput | Prisma.SortOrder
   lastName?: Prisma.SortOrderInput | Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  dob?: Prisma.SortOrderInput | Prisma.SortOrder
+  gender?: Prisma.SortOrderInput | Prisma.SortOrder
+  profileImage?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   refreshTokenHash?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -267,6 +311,10 @@ export type UsersScalarWhereWithAggregatesInput = {
   email?: Prisma.StringNullableWithAggregatesFilter<"Users"> | string | null
   firstName?: Prisma.StringNullableWithAggregatesFilter<"Users"> | string | null
   lastName?: Prisma.StringNullableWithAggregatesFilter<"Users"> | string | null
+  address?: Prisma.StringNullableWithAggregatesFilter<"Users"> | string | null
+  dob?: Prisma.DateTimeNullableWithAggregatesFilter<"Users"> | Date | string | null
+  gender?: Prisma.EnumGenderNullableWithAggregatesFilter<"Users"> | $Enums.Gender | null
+  profileImage?: Prisma.StringNullableWithAggregatesFilter<"Users"> | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"Users"> | boolean
   refreshTokenHash?: Prisma.StringNullableWithAggregatesFilter<"Users"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Users"> | Date | string
@@ -279,6 +327,10 @@ export type UsersCreateInput = {
   email?: string | null
   firstName?: string | null
   lastName?: string | null
+  address?: string | null
+  dob?: Date | string | null
+  gender?: $Enums.Gender | null
+  profileImage?: string | null
   isActive?: boolean
   refreshTokenHash?: string | null
   createdAt?: Date | string
@@ -291,6 +343,10 @@ export type UsersUncheckedCreateInput = {
   email?: string | null
   firstName?: string | null
   lastName?: string | null
+  address?: string | null
+  dob?: Date | string | null
+  gender?: $Enums.Gender | null
+  profileImage?: string | null
   isActive?: boolean
   refreshTokenHash?: string | null
   createdAt?: Date | string
@@ -303,6 +359,10 @@ export type UsersUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   refreshTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -315,6 +375,10 @@ export type UsersUncheckedUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   refreshTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -327,6 +391,10 @@ export type UsersCreateManyInput = {
   email?: string | null
   firstName?: string | null
   lastName?: string | null
+  address?: string | null
+  dob?: Date | string | null
+  gender?: $Enums.Gender | null
+  profileImage?: string | null
   isActive?: boolean
   refreshTokenHash?: string | null
   createdAt?: Date | string
@@ -339,6 +407,10 @@ export type UsersUpdateManyMutationInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   refreshTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -351,6 +423,10 @@ export type UsersUncheckedUpdateManyInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   refreshTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -363,6 +439,10 @@ export type UsersCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  dob?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  profileImage?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   refreshTokenHash?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -375,6 +455,10 @@ export type UsersMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  dob?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  profileImage?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   refreshTokenHash?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -387,6 +471,10 @@ export type UsersMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  dob?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  profileImage?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   refreshTokenHash?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -399,6 +487,14 @@ export type StringFieldUpdateOperationsInput = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
+export type NullableEnumGenderFieldUpdateOperationsInput = {
+  set?: $Enums.Gender | null
 }
 
 export type BoolFieldUpdateOperationsInput = {
@@ -417,6 +513,10 @@ export type UsersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   email?: boolean
   firstName?: boolean
   lastName?: boolean
+  address?: boolean
+  dob?: boolean
+  gender?: boolean
+  profileImage?: boolean
   isActive?: boolean
   refreshTokenHash?: boolean
   createdAt?: boolean
@@ -429,6 +529,10 @@ export type UsersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   email?: boolean
   firstName?: boolean
   lastName?: boolean
+  address?: boolean
+  dob?: boolean
+  gender?: boolean
+  profileImage?: boolean
   isActive?: boolean
   refreshTokenHash?: boolean
   createdAt?: boolean
@@ -441,6 +545,10 @@ export type UsersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   email?: boolean
   firstName?: boolean
   lastName?: boolean
+  address?: boolean
+  dob?: boolean
+  gender?: boolean
+  profileImage?: boolean
   isActive?: boolean
   refreshTokenHash?: boolean
   createdAt?: boolean
@@ -453,13 +561,17 @@ export type UsersSelectScalar = {
   email?: boolean
   firstName?: boolean
   lastName?: boolean
+  address?: boolean
+  dob?: boolean
+  gender?: boolean
+  profileImage?: boolean
   isActive?: boolean
   refreshTokenHash?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UsersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "phoneNumber" | "email" | "firstName" | "lastName" | "isActive" | "refreshTokenHash" | "createdAt" | "updatedAt", ExtArgs["result"]["users"]>
+export type UsersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "phoneNumber" | "email" | "firstName" | "lastName" | "address" | "dob" | "gender" | "profileImage" | "isActive" | "refreshTokenHash" | "createdAt" | "updatedAt", ExtArgs["result"]["users"]>
 
 export type $UsersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Users"
@@ -470,6 +582,10 @@ export type $UsersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     email: string | null
     firstName: string | null
     lastName: string | null
+    address: string | null
+    dob: Date | null
+    gender: $Enums.Gender | null
+    profileImage: string | null
     isActive: boolean
     refreshTokenHash: string | null
     createdAt: Date
@@ -902,6 +1018,10 @@ export interface UsersFieldRefs {
   readonly email: Prisma.FieldRef<"Users", 'String'>
   readonly firstName: Prisma.FieldRef<"Users", 'String'>
   readonly lastName: Prisma.FieldRef<"Users", 'String'>
+  readonly address: Prisma.FieldRef<"Users", 'String'>
+  readonly dob: Prisma.FieldRef<"Users", 'DateTime'>
+  readonly gender: Prisma.FieldRef<"Users", 'Gender'>
+  readonly profileImage: Prisma.FieldRef<"Users", 'String'>
   readonly isActive: Prisma.FieldRef<"Users", 'Boolean'>
   readonly refreshTokenHash: Prisma.FieldRef<"Users", 'String'>
   readonly createdAt: Prisma.FieldRef<"Users", 'DateTime'>

@@ -4,6 +4,9 @@ import {
   Patch,
   Body,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  BadRequestException,
 } from '@nestjs/common';
 
 import {
@@ -18,6 +21,9 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { ProfileService } from './profile.service';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiConsumes, ApiBody } from '@nestjs/swagger';
+
 @ApiTags('Profile')
 @ApiBearerAuth('access-token')
 @UseGuards(JwtAuthGuard)
@@ -28,9 +34,7 @@ export class ProfileController {
   ) {}
 
   @Get()
-  @ApiOperation({
-    summary: 'Get current user profile',
-  })
+  @ApiOperation({ summary: 'Get current user profile', })
   getProfile(
     @CurrentUser() user: any,
   ) {
@@ -38,9 +42,7 @@ export class ProfileController {
   }
 
   @Patch()
-  @ApiOperation({
-    summary: 'Update current user profile',
-  })
+  @ApiOperation({ summary: 'Update current user profile', })
   updateProfile(
     @CurrentUser() user: any,
     @Body() dto: UpdateProfileDto,
@@ -50,4 +52,55 @@ export class ProfileController {
       dto,
     );
   }
-}
+
+
+  @Patch('photo')
+  @ApiOperation({ summary: 'Upload profile photo', })
+  @ApiConsumes('multipart/form-data')
+
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        photo: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+
+  @UseInterceptors(
+  FileInterceptor('photo', {
+    limits: {
+      fileSize: 2 * 1024 * 1024, // 2 MB
+    },
+    fileFilter: (req, file, cb) => {
+      if (
+        file.mimetype === 'image/jpeg' ||
+        file.mimetype === 'image/png' ||
+        file.mimetype === 'image/webp'
+      ) {
+        cb(null, true);
+      } else {
+        cb(
+          new BadRequestException(
+            'Only JPG, PNG and WEBP images are allowed.',
+          ),
+          false,
+        );
+      }
+      },
+    }),
+  )
+
+  uploadProfilePhoto(
+  @CurrentUser() user: any,
+  @UploadedFile() file: Express.Multer.File,
+  ) {
+      return this.profileService.uploadProfilePhoto(
+        user.sub,
+        file,
+      );
+  }
+  }

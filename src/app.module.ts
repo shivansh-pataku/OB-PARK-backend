@@ -8,6 +8,7 @@ import { UsersModule } from './modules/users/users.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { ProfileModule } from './modules/profile/profile.module';
+import { StorageModule } from './modules/storage/storage.module';
 
 @Module({
 
@@ -20,7 +21,7 @@ import { ProfileModule } from './modules/profile/profile.module';
           cache: true,
           expandVariables: true,
         }),
-      ProfileModule, PrismaModule, FirebaseModule, AuthModule, UsersModule,],
+      ProfileModule, PrismaModule, FirebaseModule, AuthModule, UsersModule, StorageModule,],
 
       providers: [
         {

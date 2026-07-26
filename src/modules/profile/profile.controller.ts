@@ -55,6 +55,14 @@ export class ProfileController {
   }
 
 
+  @Get('photo')
+  @ApiOperation({ summary: 'Get profile photo details', })
+  getProfilePhoto(
+    @CurrentUser() user: any,
+  ) {
+    return this.profileService.getProfilePhoto(user.sub);
+  }
+
   @Patch('photo')
   @ApiOperation({ summary: 'Upload profile photo', })
   @ApiConsumes('multipart/form-data')
@@ -74,7 +82,7 @@ export class ProfileController {
   @UseInterceptors(
   FileInterceptor('photo', {
     limits: {
-      fileSize: 2 * 1024 * 1024, // 2 MB
+      fileSize: 10 * 1024 * 1024, // 10 MB
     },
     fileFilter: (req, file, cb) => {
       if (

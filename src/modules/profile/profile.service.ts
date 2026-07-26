@@ -117,7 +117,31 @@ return {
 };
 }
 
+  async getProfilePhoto(userId: string) {
+    const user = await this.prisma.users.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        profileImage: true,
+      },
+    });
 
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    if (!user.profileImage) {
+      throw new NotFoundException('No profile photo found.');
+    }
+
+    return {
+      profileImage: user.profileImage,
+      profileImageUrl: this.storageService.getPublicUrl(
+        user.profileImage,
+      ),
+    };
+  }
 
 
 async deleteProfilePhoto(

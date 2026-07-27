@@ -11,28 +11,29 @@ import { ProfileModule } from './modules/profile/profile.module';
 import { StorageModule } from './modules/storage/storage.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { VehicleModule } from './modules/vehicle/vehicle.module';
 
 @Module({
 
-      imports: [
-      ConfigModule.forRoot({
-          isGlobal: true,
-          envFilePath: '.env',
-          load: [configuration],
-          validate,
-          cache: true,
-          expandVariables: true,
-        }),
-      ProfileModule, PrismaModule, FirebaseModule, AuthModule, UsersModule, StorageModule, ServeStaticModule.forRoot({
-        rootPath: join(process.cwd(), 'uploads'),
-        serveRoot: '/uploads',
-      }),],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+      load: [configuration],
+      validate,
+      cache: true,
+      expandVariables: true,
+    }),
+    VehicleModule, ProfileModule, PrismaModule, FirebaseModule, AuthModule, UsersModule, StorageModule, ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), 'uploads'),
+      serveRoot: '/uploads',
+    }),],
 
-      providers: [
-        {
-          provide: APP_GUARD,
-          useClass: JwtAuthGuard,
-        },
-      ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
-export class AppModule {}
+export class AppModule { }

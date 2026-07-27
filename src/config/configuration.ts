@@ -15,4 +15,9 @@ export default () => ({
     accessExpiresIn: process.env.JWT_ACCESS_EXPIRES_IN,
     refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN,
   },
+
+  surepass: {
+    baseUrl: process.env.SUREPASS_BASE_URL,
+    token: process.env.SUREPASS_TOKEN,
+  },
 });

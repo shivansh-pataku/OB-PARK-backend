@@ -13,6 +13,8 @@ export const envSchema = z.object({
   FIREBASE_PROJECT_ID: z.string(),
   FIREBASE_CLIENT_EMAIL: z.string().email(),
   FIREBASE_PRIVATE_KEY: z.string(),
+  SUREPASS_BASE_URL: z.string().url(),
+  SUREPASS_TOKEN: z.string().min(1),
 });
 
 export function validate(config: Record<string, unknown>) {

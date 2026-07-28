@@ -3,7 +3,7 @@ import { IsBoolean, IsOptional, IsString, IsNotEmpty, Matches } from 'class-vali
 
 export class RcV2RequestDto {
     @ApiProperty({
-        example: 'DL08AB1234',
+        example: 'GJ05CN4635',
         description: 'Vehicle registration certificate number (RC number)',
     })
     @IsString()

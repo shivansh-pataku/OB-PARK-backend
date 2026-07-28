@@ -3,7 +3,7 @@ import { IsNotEmpty, IsString, Matches } from 'class-validator';
 
 export class FastagV2RequestDto {
     @ApiProperty({
-        example: 'CG07BC1234',
+        example: 'GJ05CN4635',
         description: 'Vehicle registration certificate number (RC number) associated with the FasTag',
     })
     @IsString()

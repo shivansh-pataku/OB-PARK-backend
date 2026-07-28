@@ -3,7 +3,7 @@ import { IsNotEmpty, IsString, Matches } from 'class-validator';
 
 export class RcChallanAdvancedRequestDto {
     @ApiProperty({
-        example: 'MP30P8880',
+        example: 'GJ05CN4635',
         description: "Vehicle's Registration Certificate Number",
     })
     @IsString()

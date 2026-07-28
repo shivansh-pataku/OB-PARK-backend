@@ -2,6 +2,7 @@ import {
     Injectable,
     InternalServerErrorException,
     ServiceUnavailableException,
+    HttpException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
@@ -58,21 +59,30 @@ export class SurepassService {
         );
 
         if (!response.ok) {
-            console.log('Status:', response.status);
+            const status = response.status;
+            console.log('Status:', status);
+            const responseText = await response.text();
+            console.log(responseText);
 
-            console.log(await response.text());
+            let errorMessage = 'Surepass request failed.';
+            try {
+                const errorJson = JSON.parse(responseText);
+                if (errorJson && errorJson.message) {
+                    errorMessage = errorJson.message;
+                }
+            } catch (e) {
+                // Not JSON
+            }
 
-            throw new ServiceUnavailableException(
-                'Surepass request failed.',
-            );
+            throw new HttpException(errorMessage, status);
         }
 
         const result = (await response.json()) as T;
 
         if (!result.success) {
-            throw new InternalServerErrorException(
-                result.message ?? 'Surepass request failed.',
-            );
+            const status = result.status_code || 500;
+            const message = result.message || 'Surepass request failed.';
+            throw new HttpException(message, status);
         }
 
         return result;

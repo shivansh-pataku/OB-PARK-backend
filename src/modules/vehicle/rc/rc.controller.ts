@@ -25,41 +25,41 @@ export class RcController {
         private readonly rcService: RcService,
     ) { }
 
-    @Post()
-    @ApiOperation({
-        summary: 'Fetch vehicle registration details',
-        description:
-            'Retrieves complete vehicle registration details using the registration number.',
-    })
-    @ApiResponse({
-        status: 200,
-        description: 'Vehicle details fetched successfully.',
-        type: RcResponseDto,
-    })
-    @ApiResponse({
-        status: 400,
-        description: 'Invalid vehicle registration number.',
-    })
-    @ApiResponse({
-        status: 401,
-        description: 'Unauthorized.',
-    })
-    @ApiResponse({
-        status: 503,
-        description: 'Surepass service unavailable.',
-    })
-    async lookupVehicle(
-        @Body() dto: RcRequestDto,
-    ): Promise<ApiResponseDto<RcResponseDto>> {
+    // @Post()
+    // @ApiOperation({
+    //     summary: 'Fetch vehicle registration details',
+    //     description:
+    //         'Retrieves complete vehicle registration details using the registration number.',
+    // })
+    // @ApiResponse({
+    //     status: 200,
+    //     description: 'Vehicle details fetched successfully.',
+    //     type: RcResponseDto,
+    // })
+    // @ApiResponse({
+    //     status: 400,
+    //     description: 'Invalid vehicle registration number.',
+    // })
+    // @ApiResponse({
+    //     status: 401,
+    //     description: 'Unauthorized.',
+    // })
+    // @ApiResponse({
+    //     status: 503,
+    //     description: 'Surepass service unavailable.',
+    // })
+    // async lookupVehicle(
+    //     @Body() dto: RcRequestDto,
+    // ): Promise<ApiResponseDto<RcResponseDto>> {
 
-        const vehicle = await this.rcService.lookupVehicle(dto);
+    //     const vehicle = await this.rcService.lookupVehicle(dto);
 
-        return {
-            success: true,
-            message: 'Vehicle details fetched successfully.',
-            data: vehicle,
-        };
-    }
+    //     return {
+    //         success: true,
+    //         message: 'Vehicle details fetched successfully.',
+    //         data: vehicle,
+    //     };
+    // }
 
     @Post('challan')
     @ApiOperation({
@@ -131,38 +131,38 @@ export class RcController {
         };
     }
 
-    @Post('v2')
-    @ApiOperation({
-        summary: 'Fetch vehicle registration details (V2)',
-        description:
-            'Retrieves comprehensive vehicle registration details using the registration certificate (RC) number with configurable unmasking options.',
-    })
-    @ApiResponse({
-        status: 200,
-        description: 'Vehicle details fetched successfully (V2).',
-        type: RcV2ResponseDto,
-    })
-    @ApiResponse({
-        status: 400,
-        description: 'Invalid inputs.',
-    })
-    @ApiResponse({
-        status: 401,
-        description: 'Unauthorized.',
-    })
-    @ApiResponse({
-        status: 503,
-        description: 'Surepass service unavailable.',
-    })
-    async lookupRcV2(
-        @Body() dto: RcV2RequestDto,
-    ): Promise<ApiResponseDto<RcV2ResponseDto>> {
-        const vehicle = await this.rcService.lookupRcV2(dto);
+    // @Post('v2')
+    // @ApiOperation({
+    //     summary: 'Fetch vehicle registration details (V2)',
+    //     description:
+    //         'Retrieves comprehensive vehicle registration details using the registration certificate (RC) number with configurable unmasking options.',
+    // })
+    // @ApiResponse({
+    //     status: 200,
+    //     description: 'Vehicle details fetched successfully (V2).',
+    //     type: RcV2ResponseDto,
+    // })
+    // @ApiResponse({
+    //     status: 400,
+    //     description: 'Invalid inputs.',
+    // })
+    // @ApiResponse({
+    //     status: 401,
+    //     description: 'Unauthorized.',
+    // })
+    // @ApiResponse({
+    //     status: 503,
+    //     description: 'Surepass service unavailable.',
+    // })
+    // async lookupRcV2(
+    //     @Body() dto: RcV2RequestDto,
+    // ): Promise<ApiResponseDto<RcV2ResponseDto>> {
+    //     const vehicle = await this.rcService.lookupRcV2(dto);
 
-        return {
-            success: true,
-            message: 'Vehicle details fetched successfully.',
-            data: vehicle,
-        };
-    }
+    //     return {
+    //         success: true,
+    //         message: 'Vehicle details fetched successfully.',
+    //         data: vehicle,
+    //     };
+    // }
 }

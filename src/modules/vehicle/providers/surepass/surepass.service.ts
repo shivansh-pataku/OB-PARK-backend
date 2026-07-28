@@ -8,6 +8,18 @@ import { ConfigService } from '@nestjs/config';
 import {
     SurepassBaseResponse,
     SurepassRcResponse,
+    SurepassChallanRequest,
+    SurepassChallanDetailsResponse,
+    SurepassChallanAdvancedRequest,
+    SurepassChallanAdvancedResponse,
+    SurepassFastagRequest,
+    SurepassFastagResponse,
+    SurepassFastagV2Request,
+    SurepassFastagV2Response,
+    SurepassFastagBalanceRequest,
+    SurepassFastagBalanceResponse,
+    SurepassRcV2Request,
+    SurepassRcV2Response,
 } from './surepass.types';
 
 @Injectable()
@@ -74,6 +86,60 @@ export class SurepassService {
             {
                 id_number: vehicleNumber,
             },
+        );
+    }
+
+    async lookupChallan(
+        body: SurepassChallanRequest,
+    ): Promise<SurepassChallanDetailsResponse> {
+        return this.request<SurepassChallanDetailsResponse>(
+            '/api/v1/rc/rc-related/challan-details',
+            body,
+        );
+    }
+
+    async lookupChallanAdvanced(
+        body: SurepassChallanAdvancedRequest,
+    ): Promise<SurepassChallanAdvancedResponse> {
+        return this.request<SurepassChallanAdvancedResponse>(
+            '/api/v1/rc/rc-related/challan-advanced',
+            body,
+        );
+    }
+
+    async verifyFastag(
+        body: SurepassFastagRequest,
+    ): Promise<SurepassFastagResponse> {
+        return this.request<SurepassFastagResponse>(
+            '/api/v1/fastag/verification',
+            body,
+        );
+    }
+
+    async verifyFastagV2(
+        body: SurepassFastagV2Request,
+    ): Promise<SurepassFastagV2Response> {
+        return this.request<SurepassFastagV2Response>(
+            '/api/v1/fastag/fastag-verification-v2',
+            body,
+        );
+    }
+
+    async lookupFastagBalance(
+        body: SurepassFastagBalanceRequest,
+    ): Promise<SurepassFastagBalanceResponse> {
+        return this.request<SurepassFastagBalanceResponse>(
+            '/api/v1/fastag/rc-to-fastag-balance',
+            body,
+        );
+    }
+
+    async lookupRcV2(
+        body: SurepassRcV2Request,
+    ): Promise<SurepassRcV2Response> {
+        return this.request<SurepassRcV2Response>(
+            '/api/v1/rc/rc-v2',
+            body,
         );
     }
 }

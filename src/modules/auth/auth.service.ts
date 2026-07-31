@@ -102,6 +102,31 @@ export class AuthService {
   }
 
   // =====================================================
+  // Mock Login (For Developer Swagger / API Testing)
+  // =====================================================
+  async mockLogin() {
+    const phoneNumber = '+919876543210';
+    let user = await this.usersService.findByPhoneNumber(phoneNumber);
+
+    if (!user) {
+      user = await this.usersService.createUser(phoneNumber);
+    }
+
+    const accessToken = await this.generateAccessToken(user);
+    const refreshToken = await this.generateRefreshToken(user);
+    const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
+    await this.usersService.updateRefreshToken(user.id, refreshTokenHash);
+
+    return {
+      success: true,
+      message: 'Mock login successful.',
+      accessToken,
+      refreshToken,
+      user,
+    };
+  }
+
+  // =====================================================
   // Refresh Access Token
   // =====================================================
 

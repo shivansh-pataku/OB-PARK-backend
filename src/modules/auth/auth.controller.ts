@@ -28,6 +28,12 @@ export class AuthController {
     return this.authService.login(dto);
   }
 
+  @Public()
+  @Post('mock-login')
+  mockLogin() {
+    return this.authService.mockLogin();
+  }
+
   // =====================================================
   // Refresh Access Token
   // =====================================================

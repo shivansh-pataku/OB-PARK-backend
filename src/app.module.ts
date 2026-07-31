@@ -12,6 +12,8 @@ import { StorageModule } from './modules/storage/storage.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { VehicleModule } from './modules/vehicle/vehicle.module';
+import { ProductsModule } from './modules/products/products.module';
+import { PaymentModule } from './modules/payment/payment.module';
 
 @Module({
 
@@ -24,7 +26,7 @@ import { VehicleModule } from './modules/vehicle/vehicle.module';
       cache: true,
       expandVariables: true,
     }),
-    VehicleModule, ProfileModule, PrismaModule, FirebaseModule, AuthModule, UsersModule, StorageModule, ServeStaticModule.forRoot({
+    PaymentModule, VehicleModule, ProfileModule, PrismaModule, FirebaseModule, AuthModule, UsersModule, StorageModule, ProductsModule, ServeStaticModule.forRoot({
       rootPath: join(process.cwd(), 'uploads'),
       serveRoot: '/uploads',
     }),],

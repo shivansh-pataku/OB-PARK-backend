@@ -2,11 +2,10 @@
 // DATABASE CONNECTION BLOCK
 // ====================================================================================
 
-    datasource db {
-
-      provider = "postgresql"     //    database management system being used (e.g., postgresql, mysql, sqlite, mongodb)
-      // url      = env("DATABASE_URL") //  database's secure password waala connection path being pulled from env  - will mot be used in this version
-    }
+datasource db {
+  provider = "postgresql" //    database management system being used (e.g., postgresql, mysql, sqlite, mongodb)
+  // url      = env("DATABASE_URL") //  database's secure password waala connection path being pulled from env  - will mot be used in this version
+}
 
 // ====================================================================================
 // PRISMA CLIENT GENERATOR BLOCK
@@ -29,12 +28,13 @@ enum Gender {
   OTHER
   PREFER_NOT_TO_SAY
 }
+
 model Users {
   id               String    @id @default(uuid())
   phoneNumber      String    @unique
   email            String?   @unique
   firstName        String?
-  lastName         String? 
+  lastName         String?
   address          String?
   dob              DateTime?
   gender           Gender?
@@ -43,16 +43,154 @@ model Users {
   refreshTokenHash String?
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
+
+  orders   Order[]
+  payments Payment[]
+}
+
+//// PAYMENTS - ORDETS - CHECKOUT TABLES --------------------------
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentGateway {
+  RAZORPAY
+  PAYU
+}
+
+enum PaymentMethod {
+  UPI
+  CARD
+  NET_BANKING
+  WALLET
+  EMI
+  PAY_LATER
+  UNKNOWN
+}
+
+model Order {
+  id          String @id @default(uuid())
+  orderNumber String @unique
+
+  userId String
+  user   Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  subtotal       Decimal @db.Decimal(10, 2)
+  discount       Decimal @default(0) @db.Decimal(10, 2)
+  tax            Decimal @default(0) @db.Decimal(10, 2)
+  shippingCharge Decimal @default(0) @db.Decimal(10, 2)
+  totalAmount    Decimal @db.Decimal(10, 2)
+
+  currency String @default("INR")
+
+  status OrderStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  items    OrderItem[]
+  payments Payment[]
+
+  @@index([userId])
+}
+
+model OrderItem {
+  id String @id @default(uuid())
+
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  productId String
+
+  productName String
+
+  productImage String?
+
+  quantity Int
+
+  unitPrice  Decimal  @db.Decimal(10, 2)
+  totalPrice Decimal  @db.Decimal(10, 2)
+  createdAt  DateTime @default(now())
+
+  @@index([orderId])
+}
+
+model Payment {
+  id       String         @id @default(uuid())
+  orderId  String
+  order    Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  userId   String
+  user     Users          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  gateway  PaymentGateway
+  amount   Decimal        @db.Decimal(10, 2)
+  currency String         @default("INR")
+  status   PaymentStatus  @default(PENDING)
+
+  gatewayOrderId String?
+
+  gatewayPaymentId String?
+
+  transactionId String?
+
+  gatewaySignature String?
+
+  paymentMethod PaymentMethod @default(UNKNOWN)
+
+  failureReason String?
+
+  paidAt DateTime?
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  attempts PaymentAttempt[]
+
+  @@index([orderId])
+  @@index([userId])
+}
+
+model PaymentAttempt {
+  id String @id @default(uuid())
+
+  paymentId String
+  payment   Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+
+  status PaymentStatus
+
+  paymentMethod PaymentMethod
+
+  gatewayTransactionId String?
+
+  failureReason String?
+
+  createdAt DateTime @default(now())
+
+  @@index([paymentId])
 }
 
 //// newsletter table  temporary ----------------------------------
 
 model User {
-  id               String   @id @default(uuid())
-  firstName        String
-  lastName         String
-  email            String   @unique
-  isNewsletterSub  Boolean  @default(true)  
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt       
+  id              String   @id @default(uuid())
+  firstName       String
+  lastName        String
+  email           String   @unique
+  isNewsletterSub Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }

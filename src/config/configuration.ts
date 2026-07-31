@@ -20,4 +20,14 @@ export default () => ({
     baseUrl: process.env.SUREPASS_BASE_URL,
     token: process.env.SUREPASS_TOKEN,
   },
+
+  payment: {
+    gateway: process.env.PAYMENT_GATEWAY,
+  },
+
+  razorpay: {
+    keyId: process.env.RAZORPAY_KEY_ID,
+    keySecret: process.env.RAZORPAY_KEY_SECRET,
+    webhookSecret: process.env.RAZORPAY_WEBHOOK_SECRET,
+  },
 });

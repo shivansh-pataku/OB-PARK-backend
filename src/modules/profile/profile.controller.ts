@@ -32,7 +32,7 @@ import { ApiConsumes, ApiBody } from '@nestjs/swagger';
 export class ProfileController {
   constructor(
     private readonly profileService: ProfileService,
-  ) {}
+  ) { }
 
   @Get()
   @ApiOperation({ summary: 'Get current user profile', })
@@ -80,37 +80,37 @@ export class ProfileController {
   })
 
   @UseInterceptors(
-  FileInterceptor('photo', {
-    limits: {
-      fileSize: 10 * 1024 * 1024, // 10 MB
-    },
-    fileFilter: (req, file, cb) => {
-      if (
-        file.mimetype === 'image/jpeg' ||
-        file.mimetype === 'image/png' ||
-        file.mimetype === 'image/webp'
-      ) {
-        cb(null, true);
-      } else {
-        cb(
-          new BadRequestException(
-            'Only JPG, PNG and WEBP images are allowed.',
-          ),
-          false,
-        );
-      }
+    FileInterceptor('photo', {
+      limits: {
+        fileSize: 10 * 1024 * 1024, // 10 MB
+      },
+      fileFilter: (req, file, cb) => {
+        if (
+          file.mimetype === 'image/jpeg' ||
+          file.mimetype === 'image/png' ||
+          file.mimetype === 'image/webp'
+        ) {
+          cb(null, true);
+        } else {
+          cb(
+            new BadRequestException(
+              'Only JPG, PNG and WEBP images are allowed.',
+            ),
+            false,
+          );
+        }
       },
     }),
   )
 
   uploadProfilePhoto(
-  @CurrentUser() user: any,
-  @UploadedFile() file: Express.Multer.File,
+    @CurrentUser() user: any,
+    @UploadedFile() file: Express.Multer.File,
   ) {
-      return this.profileService.uploadProfilePhoto(
-        user.sub,
-        file,
-      );
+    return this.profileService.uploadProfilePhoto(
+      user.sub,
+      file,
+    );
   }
 
   @Delete('photo')
@@ -124,4 +124,4 @@ export class ProfileController {
       user.sub,
     );
   }
-  }
+}

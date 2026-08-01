@@ -140,7 +140,7 @@ model Payment {
   currency String         @default("INR")
   status   PaymentStatus  @default(PENDING)
 
-  gatewayOrderId String?
+  gatewayOrderId String? @unique
 
   gatewayPaymentId String?
 

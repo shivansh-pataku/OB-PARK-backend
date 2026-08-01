@@ -8,6 +8,7 @@ import { PaymentController } from './payment.controller';
 import { PaymentService } from './payment.service';
 
 import { RazorpayService } from './gateways/razorpay/razorpay.service';
+import { WebhookController } from './webhook/webhook.controller';
 
 @Module({
     imports: [
@@ -18,6 +19,7 @@ import { RazorpayService } from './gateways/razorpay/razorpay.service';
 
     controllers: [
         PaymentController,
+        WebhookController
     ],
 
     providers: [

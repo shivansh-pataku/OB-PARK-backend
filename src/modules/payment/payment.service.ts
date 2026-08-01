@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 import { PrismaService } from '../../database/prisma/prisma.service';
@@ -7,6 +7,7 @@ import { ProductsService } from '../products/products.service';
 import { RazorpayService } from './gateways/razorpay/razorpay.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { VerifyPaymentDto } from './dto/verify-payment.dto';
+import { OrderStatus, PaymentMethod, PaymentStatus } from '../../generated/prisma/enums';
 
 @Injectable()
 export class PaymentService {
@@ -25,7 +26,7 @@ export class PaymentService {
 
         // 2. Pricing calculations
         const subtotal = Number(product.price) * dto.quantity;
-        
+
         let discount = 0;
         if (dto.couponCode === 'SAVE100') {
             discount = Math.min(100, subtotal);
@@ -98,6 +99,39 @@ export class PaymentService {
         };
     }
 
+
+    async handleRazorpayWebhook(
+        payload: any,
+        rawBody: Buffer,
+        signature: string,
+    ) {
+        const isValid =
+            this.razorpayService.verifyWebhookSignature(
+                rawBody,
+                signature,
+            );
+
+        if (!isValid) {
+            throw new UnauthorizedException(
+                'Invalid Razorpay webhook signature.',
+            );
+        }
+
+        switch (payload.event) {
+            case 'payment.captured':
+                return this.handlePaymentCaptured(payload);
+
+            case 'payment.failed':
+                return this.handlePaymentFailed(payload);
+
+            default:
+                console.log(
+                    `Unhandled Razorpay event: ${payload.event}`,
+                );
+                return;
+        }
+    }
+
     async verifyPayment(dto: VerifyPaymentDto, user: any) {
         const userId = user.sub;
 
@@ -157,5 +191,154 @@ export class PaymentService {
             message: 'Payment verified and order confirmed successfully.',
             orderId: payment.orderId,
         };
+    }
+
+    private async handlePaymentCaptured(payload: any) {
+        console.log('Payment Captured');
+        console.log(payload);
+
+        const paymentEntity = payload.payload.payment.entity;
+        const gatewayOrderId = paymentEntity.order_id;
+        const gatewayPaymentId = paymentEntity.id;
+        const paymentMethod = paymentEntity.method;
+        const amount = paymentEntity.amount;
+
+        const payment = await this.prisma.payment.findFirst({
+            where: { gatewayOrderId },
+        });
+
+        if (!payment) {
+            console.error('Payment not found for gatewayOrderId:', gatewayOrderId);
+            return;
+        }
+
+        if (payment.status === PaymentStatus.SUCCESS) {
+            console.log(
+                `Payment ${gatewayPaymentId} already processed.`,
+            );
+
+            return;
+        }
+
+        await this.prisma.$transaction([
+
+            this.prisma.payment.update({
+                where: {
+                    id: payment.id,
+                },
+                data: {
+                    status: PaymentStatus.SUCCESS,
+                    gatewayPaymentId,
+                    paymentMethod: this.mapPaymentMethod(paymentMethod),
+                    paidAt: new Date(),
+                },
+            }),
+
+            this.prisma.order.update({
+                where: {
+                    id: payment.orderId,
+                },
+                data: {
+                    status: OrderStatus.CONFIRMED,
+                },
+            }),
+
+        ]);
+
+        await this.prisma.$transaction([
+            this.prisma.payment.update({
+                where: {
+                    id: payment.id,
+                },
+                data: {
+                    status: PaymentStatus.SUCCESS,
+
+                    gatewayPaymentId,
+
+                    paymentMethod:
+                        this.mapPaymentMethod(paymentMethod),
+
+                    paidAt: new Date(),
+                },
+            }),
+
+            this.prisma.order.update({
+                where: {
+                    id: payment.orderId,
+                },
+                data: {
+                    status: OrderStatus.CONFIRMED,
+                },
+            }),
+        ]);
+    }
+
+    private async handlePaymentFailed(
+        payload: any,
+    ) {
+        console.log('Payment Failed');
+        console.log(payload);
+
+        const paymentEntity = payload.payload.payment.entity;
+        const gatewayOrderId = paymentEntity.order_id;
+        const gatewayPaymentId = paymentEntity.id;
+        const paymentMethod = paymentEntity.method;
+        const failureReason = paymentEntity.error_description ?? 'Payment failed';
+
+        const payment = await this.prisma.payment.findFirst({
+            where: { gatewayOrderId },
+        });
+
+        if (!payment) {
+            console.log(`Payment not found for ${gatewayOrderId}`,);
+            console.error('Payment not found for gatewayOrderId:', gatewayOrderId);
+            return;
+        }
+
+        // Update payment status to FAILED
+        await this.prisma.payment.update({
+            where: { id: payment.id },
+            data: {
+                status: PaymentStatus.FAILED,
+                gatewayPaymentId,
+                paymentMethod: this.mapPaymentMethod(paymentMethod),
+                failureReason,
+            },
+        });
+
+        await this.prisma.paymentAttempt.create({
+            data: {
+                paymentId: payment.id,
+                status: PaymentStatus.FAILED,
+                paymentMethod: this.mapPaymentMethod(paymentMethod),
+                gatewayTransactionId: gatewayPaymentId,
+                failureReason,
+            },
+        });
+    }
+
+    private mapPaymentMethod(method?: string,): PaymentMethod {
+        switch (method?.toLowerCase()) {
+            case 'upi':
+                return PaymentMethod.UPI;
+
+            case 'card':
+                return PaymentMethod.CARD;
+
+            case 'netbanking':
+                return PaymentMethod.NET_BANKING;
+
+            case 'wallet':
+                return PaymentMethod.WALLET;
+
+            case 'emi':
+                return PaymentMethod.EMI;
+
+            case 'paylater':
+                return PaymentMethod.PAY_LATER;
+
+            default:
+                return PaymentMethod.UNKNOWN;
+        }
     }
 }

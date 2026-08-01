@@ -2,11 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import Razorpay from 'razorpay';
 import * as crypto from 'crypto';
-import {
-    PaymentGateway,
-    CreatePaymentOrderDto,
-    VerifyPaymentDto,
-} from '../../interfaces/payment-gateway.interface';
+import { PaymentGateway, CreatePaymentOrderDto, VerifyPaymentDto } from '../../interfaces/payment-gateway.interface';
+
+
 @Injectable()
 export class RazorpayService implements PaymentGateway {
     private readonly razorpay: Razorpay;
@@ -62,5 +60,28 @@ export class RazorpayService implements PaymentGateway {
         return this.razorpay.payments.refund(paymentId, {
             amount,
         });
+    }
+
+    verifyWebhookSignature(
+        rawBody: Buffer,
+        signature: string,
+    ): boolean {
+        const webhookSecret = this.configService.get<string>(
+            'razorpay.webhookSecret',
+        );
+
+        if (!webhookSecret) {
+            throw new Error('RAZORPAY_WEBHOOK_SECRET is not configured.');
+        }
+
+        const generatedSignature = crypto
+            .createHmac('sha256', webhookSecret)
+            .update(rawBody)
+            .digest('hex');
+
+        return crypto.timingSafeEqual(
+            Buffer.from(generatedSignature),
+            Buffer.from(signature),
+        );
     }
 }

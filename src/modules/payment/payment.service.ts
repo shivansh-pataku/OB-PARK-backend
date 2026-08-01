@@ -7,7 +7,7 @@ import { ProductsService } from '../products/products.service';
 import { RazorpayService } from './gateways/razorpay/razorpay.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { VerifyPaymentDto } from './dto/verify-payment.dto';
-import { OrderStatus, PaymentMethod, PaymentStatus } from '../../generated/prisma/enums';
+import { OrderStatus, PaymentMethod, PaymentStatus, PaymentGateway } from '../../generated/prisma/enums';
 
 @Injectable()
 export class PaymentService {
@@ -48,7 +48,7 @@ export class PaymentService {
                 shippingCharge,
                 totalAmount,
                 currency: 'INR',
-                status: 'PENDING',
+                status: OrderStatus.PENDING,
                 items: {
                     create: {
                         productId: product.id,
@@ -66,12 +66,12 @@ export class PaymentService {
         const amountInPaise = Math.round(totalAmount * 100);
         let gatewayOrderId: string | null = null;
 
-        if (dto.gateway === 'RAZORPAY') {
+        if (dto.gateway === PaymentGateway.RAZORPAY) {
             const razorpayOrder = await this.razorpayService.createOrder({
                 amount: amountInPaise,
                 currency: 'INR',
                 receipt: order.id,
-            }) as any;
+            }) as { id: string };
             gatewayOrderId = razorpayOrder.id;
         }
 
@@ -80,10 +80,10 @@ export class PaymentService {
             data: {
                 orderId: order.id,
                 userId,
-                gateway: dto.gateway as any,
+                gateway: dto.gateway,
                 amount: totalAmount,
                 currency: 'INR',
-                status: 'PENDING',
+                status: PaymentStatus.PENDING,
                 gatewayOrderId,
             },
         });
@@ -159,7 +159,7 @@ export class PaymentService {
             await this.prisma.payment.update({
                 where: { id: payment.id },
                 data: {
-                    status: 'FAILED',
+                    status: PaymentStatus.FAILED,
                     gatewayPaymentId: dto.razorpay_payment_id,
                     gatewaySignature: dto.razorpay_signature,
                 },
@@ -167,24 +167,24 @@ export class PaymentService {
             throw new BadRequestException('Payment verification failed. Invalid signature.');
         }
 
-        // 2. Update Payment status to SUCCESS
-        await this.prisma.payment.update({
-            where: { id: payment.id },
-            data: {
-                status: 'SUCCESS',
-                gatewayPaymentId: dto.razorpay_payment_id,
-                gatewaySignature: dto.razorpay_signature,
-                paidAt: new Date(),
-            },
-        });
-
-        // 3. Update associated Order status to CONFIRMED
-        await this.prisma.order.update({
-            where: { id: payment.orderId },
-            data: {
-                status: 'CONFIRMED',
-            },
-        });
+        // 2. Update Payment status to SUCCESS and Order status to CONFIRMED atomically
+        await this.prisma.$transaction([
+            this.prisma.payment.update({
+                where: { id: payment.id },
+                data: {
+                    status: PaymentStatus.SUCCESS,
+                    gatewayPaymentId: dto.razorpay_payment_id,
+                    gatewaySignature: dto.razorpay_signature,
+                    paidAt: new Date(),
+                },
+            }),
+            this.prisma.order.update({
+                where: { id: payment.orderId },
+                data: {
+                    status: OrderStatus.CONFIRMED,
+                },
+            }),
+        ]);
 
         return {
             success: true,
@@ -221,7 +221,6 @@ export class PaymentService {
         }
 
         await this.prisma.$transaction([
-
             this.prisma.payment.update({
                 where: {
                     id: payment.id,
@@ -233,35 +232,6 @@ export class PaymentService {
                     paidAt: new Date(),
                 },
             }),
-
-            this.prisma.order.update({
-                where: {
-                    id: payment.orderId,
-                },
-                data: {
-                    status: OrderStatus.CONFIRMED,
-                },
-            }),
-
-        ]);
-
-        await this.prisma.$transaction([
-            this.prisma.payment.update({
-                where: {
-                    id: payment.id,
-                },
-                data: {
-                    status: PaymentStatus.SUCCESS,
-
-                    gatewayPaymentId,
-
-                    paymentMethod:
-                        this.mapPaymentMethod(paymentMethod),
-
-                    paidAt: new Date(),
-                },
-            }),
-
             this.prisma.order.update({
                 where: {
                     id: payment.orderId,

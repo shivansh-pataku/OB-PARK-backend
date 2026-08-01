@@ -36,7 +36,15 @@ export class RazorpayService implements PaymentGateway {
             .createHmac('sha256', secret)
             .update(body)
             .digest('hex');
-        return expectedSignature === data.signature;
+
+        const expectedBuffer = Buffer.from(expectedSignature);
+        const signatureBuffer = Buffer.from(data.signature || '');
+
+        if (expectedBuffer.length !== signatureBuffer.length) {
+            return false;
+        }
+
+        return crypto.timingSafeEqual(expectedBuffer, signatureBuffer);
     }
 
     /**
@@ -79,9 +87,13 @@ export class RazorpayService implements PaymentGateway {
             .update(rawBody)
             .digest('hex');
 
-        return crypto.timingSafeEqual(
-            Buffer.from(generatedSignature),
-            Buffer.from(signature),
-        );
+        const generatedBuffer = Buffer.from(generatedSignature);
+        const signatureBuffer = Buffer.from(signature || '');
+
+        if (generatedBuffer.length !== signatureBuffer.length) {
+            return false;
+        }
+
+        return crypto.timingSafeEqual(generatedBuffer, signatureBuffer);
     }
 }

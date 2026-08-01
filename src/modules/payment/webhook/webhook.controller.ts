@@ -5,6 +5,7 @@ import {
     HttpCode,
     Post,
     Req,
+    BadRequestException,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { ApiExcludeController } from '@nestjs/swagger';
@@ -29,9 +30,13 @@ export class WebhookController {
         @Body()
         payload: any,
     ) {
+        if (!req.rawBody) {
+            throw new BadRequestException('Raw request body is missing.');
+        }
+
         await this.paymentService.handleRazorpayWebhook(
             payload,
-            req.rawBody!,
+            req.rawBody,
             signature,
         );
 

@@ -7,19 +7,10 @@ import { FastagService } from './fastag/fastag.service';
 import { SurepassService } from './providers/surepass/surepass.service';
 
 @Module({
-    controllers: [
-        RcController,
-        FastagController,
-    ],
+  controllers: [RcController, FastagController],
 
-    providers: [
-        RcService,
-        FastagService,
-        SurepassService,
-    ],
+  providers: [RcService, FastagService, SurepassService],
 
-    exports: [
-        RcService,
-    ],
+  exports: [RcService],
 })
-export class VehicleModule { }
+export class VehicleModule {}

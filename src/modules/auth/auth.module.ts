@@ -13,16 +13,17 @@ import { FirebaseModule } from '../../integrations/firebase/firebase.module';
 import { ConfigService } from '@nestjs/config';
 import type { StringValue } from 'ms';
 
-
 @Module({
-imports: [
+  imports: [
     PassportModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_ACCESS_SECRET'),
         signOptions: {
-          expiresIn: configService.get<string>('JWT_ACCESS_EXPIRES_IN') as StringValue,
+          expiresIn: configService.get<string>(
+            'JWT_ACCESS_EXPIRES_IN',
+          ) as StringValue,
         },
       }),
     }),

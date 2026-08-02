@@ -11,24 +11,12 @@ import { RazorpayService } from './gateways/razorpay/razorpay.service';
 import { WebhookController } from './webhook/webhook.controller';
 
 @Module({
-    imports: [
-        ConfigModule,
-        PrismaModule,
-        ProductsModule,
-    ],
+  imports: [ConfigModule, PrismaModule, ProductsModule],
 
-    controllers: [
-        PaymentController,
-        WebhookController
-    ],
+  controllers: [PaymentController, WebhookController],
 
-    providers: [
-        PaymentService,
-        RazorpayService,
-    ],
+  providers: [PaymentService, RazorpayService],
 
-    exports: [
-        PaymentService,
-    ],
+  exports: [PaymentService],
 })
-export class PaymentModule { }
+export class PaymentModule {}

@@ -10,29 +10,21 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 @ApiBearerAuth('access-token')
 @Controller('payment')
 export class PaymentController {
-    constructor(
-        private readonly paymentService: PaymentService,
-    ) { }
+  constructor(private readonly paymentService: PaymentService) {}
 
-    @Post('create')
-    @ApiOperation({
-        summary: 'Create Razorpay payment order',
-    })
-    async createPayment(
-        @CurrentUser() user: any,
-        @Body() dto: CreatePaymentDto,
-    ) {
-        return this.paymentService.createPayment(dto, user);
-    }
+  @Post('create')
+  @ApiOperation({
+    summary: 'Create Razorpay payment order',
+  })
+  async createPayment(@CurrentUser() user: any, @Body() dto: CreatePaymentDto) {
+    return this.paymentService.createPayment(dto, user);
+  }
 
-    @Post('verify')
-    @ApiOperation({
-        summary: 'Verify Razorpay payment signature and confirm order',
-    })
-    async verifyPayment(
-        @CurrentUser() user: any,
-        @Body() dto: VerifyPaymentDto,
-    ) {
-        return this.paymentService.verifyPayment(dto, user);
-    }
+  @Post('verify')
+  @ApiOperation({
+    summary: 'Verify Razorpay payment signature and confirm order',
+  })
+  async verifyPayment(@CurrentUser() user: any, @Body() dto: VerifyPaymentDto) {
+    return this.paymentService.verifyPayment(dto, user);
+  }
 }

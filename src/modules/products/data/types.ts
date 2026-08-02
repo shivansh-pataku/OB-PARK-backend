@@ -73,57 +73,56 @@ export interface OtherProductImages {
   enuImages: string[];
 }
 
-
 export const productCategories: ProductCategory[] = [
   {
-    id: "cat-1",
+    id: 'cat-1',
 
-    categoryName: "EV (Electric Vehicle) Accessories",
+    categoryName: 'EV (Electric Vehicle) Accessories',
 
-    slug: "ev-electric-vehicle-accessories",
+    slug: 'ev-electric-vehicle-accessories',
 
-    imagePath: "/categories/ev-accessories.jpg",
+    imagePath: '/categories/ev-accessories.jpg',
 
     shortDescription:
-      "Charging solutions, EV connectors, smart battery tools and modern electric vehicle accessories.",
+      'Charging solutions, EV connectors, smart battery tools and modern electric vehicle accessories.',
   },
 
   {
-    id: "cat-2",
+    id: 'cat-2',
 
-    categoryName: "Exterior Accessories",
+    categoryName: 'Exterior Accessories',
 
-    slug: "exterior-accessories",
+    slug: 'exterior-accessories',
 
-    imagePath: "/categories/exterior-accessories.jpg",
+    imagePath: '/categories/exterior-accessories.jpg',
 
     shortDescription:
-      "Car covers, body styling parts, exterior protection accessories and vehicle appearance upgrades.",
+      'Car covers, body styling parts, exterior protection accessories and vehicle appearance upgrades.',
   },
 
   {
-    id: "cat-3",
+    id: 'cat-3',
 
-    categoryName: "Electronics & Smart Gadgets",
+    categoryName: 'Electronics & Smart Gadgets',
 
-    slug: "electronics-smart-gadgets",
+    slug: 'electronics-smart-gadgets',
 
-    imagePath: "/categories/electronics-smart-gadgets.jpg",
+    imagePath: '/categories/electronics-smart-gadgets.jpg',
 
     shortDescription:
-      "Dashcams, smart chargers, wireless connectivity tools, navigation devices and modern car electronics.",
+      'Dashcams, smart chargers, wireless connectivity tools, navigation devices and modern car electronics.',
   },
 
   {
-    id: "cat-4",
+    id: 'cat-4',
 
-    categoryName: "Emergency & Utility Products",
+    categoryName: 'Emergency & Utility Products',
 
-    slug: "emergency-utility-products",
+    slug: 'emergency-utility-products',
 
-    imagePath: "/categories/emergency-utility-products.jpg",
+    imagePath: '/categories/emergency-utility-products.jpg',
 
     shortDescription:
-      "Emergency repair kits, portable inflators, jump starters, safety tools and roadside utility essentials.",
+      'Emergency repair kits, portable inflators, jump starters, safety tools and roadside utility essentials.',
   },
 ];

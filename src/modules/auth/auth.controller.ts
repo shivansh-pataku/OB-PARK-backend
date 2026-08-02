@@ -12,9 +12,7 @@ import { Public } from '../../common/decorators/public.decorator';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   // =====================================================
   // Login
@@ -22,9 +20,7 @@ export class AuthController {
 
   @Public()
   @Post('login')
-  login(
-    @Body() dto: LoginDto,
-  ) {
+  login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
   }
 
@@ -40,9 +36,7 @@ export class AuthController {
 
   @Public()
   @Post('refresh')
-  refresh(
-    @Body() dto: RefreshTokenDto,
-  ) {
+  refresh(@Body() dto: RefreshTokenDto) {
     return this.authService.refresh(dto);
   }
 
@@ -51,9 +45,7 @@ export class AuthController {
   // =====================================================
 
   @Post('logout')
-  logout(
-    @CurrentUser() user: any,
-  ) {
+  logout(@CurrentUser() user: any) {
     return this.authService.logout(user.sub);
   }
 }

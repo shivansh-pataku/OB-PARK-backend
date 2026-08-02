@@ -3,12 +3,9 @@ import { PrismaService } from '../../database/prisma/prisma.service';
 // import { UpdateProfileDto } from './dto/update-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 
-
 @Injectable()
 export class UsersService {
-  constructor(
-    private readonly prisma: PrismaService,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async findByPhoneNumber(phoneNumber: string) {
     return this.prisma.users.findUnique({
@@ -35,10 +32,7 @@ export class UsersService {
   //   });
   // }
 
-  async updateRefreshToken(
-  id: string,
-    refreshTokenHash: string,
-  ) {
+  async updateRefreshToken(id: string, refreshTokenHash: string) {
     return this.prisma.users.update({
       where: {
         id,
@@ -57,7 +51,7 @@ export class UsersService {
     });
   }
 
-    async removeRefreshToken(id: string) {
+  async removeRefreshToken(id: string) {
     return this.prisma.users.update({
       where: {
         id,
@@ -67,6 +61,4 @@ export class UsersService {
       },
     });
   }
-
-  
 }

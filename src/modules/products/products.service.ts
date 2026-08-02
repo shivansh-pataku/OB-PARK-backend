@@ -13,7 +13,10 @@ export class ProductsService {
     return path;
   }
 
-  private mapProduct(product: any, category: { id: string; categoryName: string; slug: string }) {
+  private mapProduct(
+    product: any,
+    category: { id: string; categoryName: string; slug: string },
+  ) {
     const mapped = {
       ...product,
       name: product.title, // Map title to name for frontend hook compatibility
@@ -28,18 +31,24 @@ export class ProductsService {
       mapped.imagePath = this.fixImagePaths(mapped.imagePath);
     }
     if (mapped.galleryImages) {
-      mapped.galleryImages = mapped.galleryImages.map((img: string) => this.fixImagePaths(img));
+      mapped.galleryImages = mapped.galleryImages.map((img: string) =>
+        this.fixImagePaths(img),
+      );
     }
     if (mapped.reviewsBreakdown?.userFeed) {
-      mapped.reviewsBreakdown.userFeed = mapped.reviewsBreakdown.userFeed.map((rev: any) => {
-        if (rev.userUploadedMedia) {
-          return {
-            ...rev,
-            userUploadedMedia: rev.userUploadedMedia.map((img: string) => this.fixImagePaths(img)),
-          };
-        }
-        return rev;
-      });
+      mapped.reviewsBreakdown.userFeed = mapped.reviewsBreakdown.userFeed.map(
+        (rev: any) => {
+          if (rev.userUploadedMedia) {
+            return {
+              ...rev,
+              userUploadedMedia: rev.userUploadedMedia.map((img: string) =>
+                this.fixImagePaths(img),
+              ),
+            };
+          }
+          return rev;
+        },
+      );
     }
     return mapped;
   }

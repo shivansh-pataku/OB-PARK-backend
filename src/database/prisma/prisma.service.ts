@@ -6,7 +6,8 @@ import { PrismaClient } from '../../generated/prisma/client';
 @Injectable()
 export class PrismaService
   extends PrismaClient
-  implements OnModuleInit, OnModuleDestroy {
+  implements OnModuleInit, OnModuleDestroy
+{
   constructor() {
     const pool = new Pool({
       connectionString: process.env.DATABASE_URL!,

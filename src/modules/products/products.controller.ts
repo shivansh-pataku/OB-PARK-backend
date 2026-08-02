@@ -28,7 +28,12 @@ export class ProductsController {
   ) {
     const parsedLimit = limit ? parseInt(limit, 10) : 10;
     const parsedOffset = offset ? parseInt(offset, 10) : 0;
-    return this.productsService.getProducts(category, search, parsedLimit, parsedOffset);
+    return this.productsService.getProducts(
+      category,
+      search,
+      parsedLimit,
+      parsedOffset,
+    );
   }
 }
 

@@ -16,7 +16,6 @@ import { ProductsModule } from './modules/products/products.module';
 import { PaymentModule } from './modules/payment/payment.module';
 
 @Module({
-
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
@@ -26,10 +25,20 @@ import { PaymentModule } from './modules/payment/payment.module';
       cache: true,
       expandVariables: true,
     }),
-    PaymentModule, VehicleModule, ProfileModule, PrismaModule, FirebaseModule, AuthModule, UsersModule, StorageModule, ProductsModule, ServeStaticModule.forRoot({
+    PaymentModule,
+    VehicleModule,
+    ProfileModule,
+    PrismaModule,
+    FirebaseModule,
+    AuthModule,
+    UsersModule,
+    StorageModule,
+    ProductsModule,
+    ServeStaticModule.forRoot({
       rootPath: join(process.cwd(), 'uploads'),
       serveRoot: '/uploads',
-    }),],
+    }),
+  ],
 
   providers: [
     {
@@ -38,4 +47,4 @@ import { PaymentModule } from './modules/payment/payment.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

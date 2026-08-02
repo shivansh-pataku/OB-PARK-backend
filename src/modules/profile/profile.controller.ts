@@ -10,11 +10,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
@@ -30,43 +26,29 @@ import { ApiConsumes, ApiBody } from '@nestjs/swagger';
 @UseGuards(JwtAuthGuard)
 @Controller('profile')
 export class ProfileController {
-  constructor(
-    private readonly profileService: ProfileService,
-  ) { }
+  constructor(private readonly profileService: ProfileService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Get current user profile', })
-  getProfile(
-    @CurrentUser() user: any,
-  ) {
+  @ApiOperation({ summary: 'Get current user profile' })
+  getProfile(@CurrentUser() user: any) {
     return this.profileService.getProfile(user.sub);
   }
 
   @Patch()
-  @ApiOperation({ summary: 'Update current user profile', })
-  updateProfile(
-    @CurrentUser() user: any,
-    @Body() dto: UpdateProfileDto,
-  ) {
-    return this.profileService.updateProfile(
-      user.sub,
-      dto,
-    );
+  @ApiOperation({ summary: 'Update current user profile' })
+  updateProfile(@CurrentUser() user: any, @Body() dto: UpdateProfileDto) {
+    return this.profileService.updateProfile(user.sub, dto);
   }
 
-
   @Get('photo')
-  @ApiOperation({ summary: 'Get profile photo details', })
-  getProfilePhoto(
-    @CurrentUser() user: any,
-  ) {
+  @ApiOperation({ summary: 'Get profile photo details' })
+  getProfilePhoto(@CurrentUser() user: any) {
     return this.profileService.getProfilePhoto(user.sub);
   }
 
   @Patch('photo')
-  @ApiOperation({ summary: 'Upload profile photo', })
+  @ApiOperation({ summary: 'Upload profile photo' })
   @ApiConsumes('multipart/form-data')
-
   @ApiBody({
     schema: {
       type: 'object',
@@ -78,7 +60,6 @@ export class ProfileController {
       },
     },
   })
-
   @UseInterceptors(
     FileInterceptor('photo', {
       limits: {
@@ -102,26 +83,18 @@ export class ProfileController {
       },
     }),
   )
-
   uploadProfilePhoto(
     @CurrentUser() user: any,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.profileService.uploadProfilePhoto(
-      user.sub,
-      file,
-    );
+    return this.profileService.uploadProfilePhoto(user.sub, file);
   }
 
   @Delete('photo')
   @ApiOperation({
     summary: 'Delete profile photo',
   })
-  deleteProfilePhoto(
-    @CurrentUser() user: any,
-  ) {
-    return this.profileService.deleteProfilePhoto(
-      user.sub,
-    );
+  deleteProfilePhoto(@CurrentUser() user: any) {
+    return this.profileService.deleteProfilePhoto(user.sub);
   }
 }

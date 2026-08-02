@@ -1,4 +1,4 @@
 export enum PaymentGateway {
-    RAZORPAY = 'RAZORPAY',
-    PAYU = 'PAYU',
+  RAZORPAY = 'RAZORPAY',
+  PAYU = 'PAYU',
 }

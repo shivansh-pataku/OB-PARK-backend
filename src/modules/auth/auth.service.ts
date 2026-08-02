@@ -50,35 +50,31 @@ export class AuthService {
   /// testing function for login, will be removed once firebase is connected
 
   async login(dto: LoginDto) {
+    /// Temporary mock until Firebase is connected
 
-  /// Temporary mock until Firebase is connected
+    //   const firebaseUser = {
+    //     uid: 'test_uid',
+    //     phoneNumber: '9816045869',
+    //   };
 
-  //   const firebaseUser = {
-  //     uid: 'test_uid',
-  //     phoneNumber: '9816045869',
-  //   };
+    /// Actual login function
 
-  /// Actual login function
-
-    const firebaseUser =
-    await this.firebaseService.verifyIdToken(
+    const firebaseUser = await this.firebaseService.verifyIdToken(
       dto.firebaseIdToken,
     );
 
     const phoneNumber = firebaseUser.phone_number || firebaseUser.phoneNumber;
 
     if (!phoneNumber) {
-      throw new UnauthorizedException('Phone number not found in Firebase token.');
+      throw new UnauthorizedException(
+        'Phone number not found in Firebase token.',
+      );
     }
 
-    let user = await this.usersService.findByPhoneNumber(
-      phoneNumber,
-    );
+    let user = await this.usersService.findByPhoneNumber(phoneNumber);
 
     if (!user) {
-      user = await this.usersService.createUser(
-        phoneNumber,
-      );
+      user = await this.usersService.createUser(phoneNumber);
     }
 
     const accessToken = await this.generateAccessToken(user);
@@ -87,10 +83,7 @@ export class AuthService {
 
     const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
 
-    await this.usersService.updateRefreshToken(
-      user.id,
-      refreshTokenHash,
-    );
+    await this.usersService.updateRefreshToken(user.id, refreshTokenHash);
 
     return {
       success: true,
@@ -131,12 +124,9 @@ export class AuthService {
   // =====================================================
 
   async refresh(dto: RefreshTokenDto) {
-    const payload = await this.jwtService.verifyAsync(
-      dto.refreshToken,
-      {
-        secret: process.env.JWT_REFRESH_SECRET!,
-      },
-    );
+    const payload = await this.jwtService.verifyAsync(dto.refreshToken, {
+      secret: process.env.JWT_REFRESH_SECRET!,
+    });
 
     const user = await this.usersService.findById(payload.sub);
 

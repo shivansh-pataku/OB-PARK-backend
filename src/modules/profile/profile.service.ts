@@ -10,7 +10,6 @@ import { UpdateProfileDto } from './dto/update-profile.dto';
 
 import { StorageService } from '../storage/storage/storage.service';
 
-
 @Injectable()
 export class ProfileService {
   constructor(
@@ -32,10 +31,7 @@ export class ProfileService {
     return user;
   }
 
-  async updateProfile(
-    userId: string,
-    dto: UpdateProfileDto,
-  ) {
+  async updateProfile(userId: string, dto: UpdateProfileDto) {
     // Check if email already exists
     if (dto.email) {
       const existingUser = await this.prisma.users.findFirst({
@@ -48,9 +44,7 @@ export class ProfileService {
       });
 
       if (existingUser) {
-        throw new ConflictException(
-          'Email already exists',
-        );
+        throw new ConflictException('Email already exists');
       }
     }
 
@@ -71,51 +65,41 @@ export class ProfileService {
     return updatedUser;
   }
 
-async uploadProfilePhoto(
-  userId: string,
-  file: Express.Multer.File,
-) {
-  // Get current user
-  const existingUser = await this.prisma.users.findUnique({
-    where: {
-      id: userId,
-    },
-    select: {
-      profileImage: true,
-    },
-  });
+  async uploadProfilePhoto(userId: string, file: Express.Multer.File) {
+    // Get current user
+    const existingUser = await this.prisma.users.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        profileImage: true,
+      },
+    });
 
-  // Delete previous image if it exists
-  if (existingUser?.profileImage) {
-    await this.storageService.deleteProfileImage(
-      existingUser.profileImage,
-    );
+    // Delete previous image if it exists
+    if (existingUser?.profileImage) {
+      await this.storageService.deleteProfileImage(existingUser.profileImage);
+    }
+
+    // Save new image
+    const imagePath = await this.storageService.saveProfileImage(file.buffer);
+
+    // Update database
+    const user = await this.prisma.users.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        profileImage: imagePath,
+      },
+    });
+
+    return {
+      message: 'Profile photo updated successfully',
+      profileImage: user.profileImage,
+      profileImageUrl: this.storageService.getPublicUrl(user.profileImage!),
+    };
   }
-
-  // Save new image
-  const imagePath =
-    await this.storageService.saveProfileImage(
-      file.buffer,
-    );
-
-  // Update database
-  const user = await this.prisma.users.update({
-    where: {
-      id: userId,
-    },
-    data: {
-      profileImage: imagePath,
-    },
-  });
-
-return {
-  message: 'Profile photo updated successfully',
-  profileImage: user.profileImage,
-  profileImageUrl: this.storageService.getPublicUrl(
-    user.profileImage!,
-  ),
-};
-}
 
   async getProfilePhoto(userId: string) {
     const user = await this.prisma.users.findUnique({
@@ -137,51 +121,43 @@ return {
 
     return {
       profileImage: user.profileImage,
-      profileImageUrl: this.storageService.getPublicUrl(
-        user.profileImage,
-      ),
+      profileImageUrl: this.storageService.getPublicUrl(user.profileImage),
     };
   }
 
+  async deleteProfilePhoto(userId: string) {
+    // Find current user
+    const user = await this.prisma.users.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        profileImage: true,
+      },
+    });
 
-async deleteProfilePhoto(
-  userId: string,
-) {
-  // Find current user
-  const user = await this.prisma.users.findUnique({
-    where: {
-      id: userId,
-    },
-    select: {
-      profileImage: true,
-    },
-  });
+    // Nothing to delete
+    if (!user?.profileImage) {
+      return {
+        message: 'No profile photo found.',
+      };
+    }
 
-  // Nothing to delete
-  if (!user?.profileImage) {
+    // Delete image from storage
+    await this.storageService.deleteProfileImage(user.profileImage);
+
+    // Remove image reference from database
+    await this.prisma.users.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        profileImage: null,
+      },
+    });
+
     return {
-      message: 'No profile photo found.',
+      message: 'Profile photo deleted successfully.',
     };
   }
-
-  // Delete image from storage
-  await this.storageService.deleteProfileImage(
-    user.profileImage,
-  );
-
-  // Remove image reference from database
-  await this.prisma.users.update({
-    where: {
-      id: userId,
-    },
-    data: {
-      profileImage: null,
-    },
-  });
-
-  return {
-    message: 'Profile photo deleted successfully.',
-  };
-}
- 
 }

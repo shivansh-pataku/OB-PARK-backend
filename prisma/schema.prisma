@@ -85,47 +85,34 @@ enum PaymentMethod {
 model Order {
   id          String @id @default(uuid())
   orderNumber String @unique
-
   userId String
   user   Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
-
   subtotal       Decimal @db.Decimal(10, 2)
   discount       Decimal @default(0) @db.Decimal(10, 2)
   tax            Decimal @default(0) @db.Decimal(10, 2)
   shippingCharge Decimal @default(0) @db.Decimal(10, 2)
   totalAmount    Decimal @db.Decimal(10, 2)
-
   currency String @default("INR")
-
   status OrderStatus @default(PENDING)
-
+  shippingAddress Json?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
   items    OrderItem[]
   payments Payment[]
-
   @@index([userId])
 }
 
 model OrderItem {
   id String @id @default(uuid())
-
   orderId String
   order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
-
   productId String
-
   productName String
-
   productImage String?
-
   quantity Int
-
   unitPrice  Decimal  @db.Decimal(10, 2)
   totalPrice Decimal  @db.Decimal(10, 2)
   createdAt  DateTime @default(now())
-
   @@index([orderId])
 }
 
@@ -141,23 +128,14 @@ model Payment {
   status   PaymentStatus  @default(PENDING)
 
   gatewayOrderId String? @unique
-
   gatewayPaymentId String?
-
   transactionId String?
-
   gatewaySignature String?
-
   paymentMethod PaymentMethod @default(UNKNOWN)
-
   failureReason String?
-
   paidAt DateTime?
-
   createdAt DateTime @default(now())
-
   updatedAt DateTime @updatedAt
-
   attempts PaymentAttempt[]
 
   @@index([orderId])
@@ -166,20 +144,13 @@ model Payment {
 
 model PaymentAttempt {
   id String @id @default(uuid())
-
   paymentId String
   payment   Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
-
   status PaymentStatus
-
   paymentMethod PaymentMethod
-
   gatewayTransactionId String?
-
   failureReason String?
-
   createdAt DateTime @default(now())
-
   @@index([paymentId])
 }
 
@@ -193,4 +164,40 @@ model User {
   isNewsletterSub Boolean  @default(true)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+}
+
+model Category {
+  id               String    @id @default(uuid())
+  categoryName     String
+  slug             String    @unique
+  imagePath        String?
+  shortDescription String?
+  products         Product[]
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model Product {
+  id                  String    @id @default(uuid())
+  title               String
+  brand               String
+  price               Decimal   @db.Decimal(10, 2)
+  currencySymbol      String    @default("$")
+  imagePath           String?
+  galleryImages       String[]
+  discountText        String?
+  averageRating       Float     @default(0)
+  totalReviewsCount   Int       @default(0)
+  boughtPastMonthText String?
+  soldLastWeekText    String?
+  categoryId          String
+  category            Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  attributes          Json?
+  aboutSections       Json?
+  shippingBadges      String[]
+  reviewsBreakdown    Json?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@index([categoryId])
 }

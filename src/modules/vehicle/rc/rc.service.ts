@@ -28,6 +28,9 @@ export class RcService {
       insuranceValidTill: response.data.insurance_upto,
       fitnessValidTill: response.data.fit_up_to,
       vehicleCategory: response.data.vehicle_category,
+      // rtoName: response.data.registered_at,
+      
+
     };
   }
 

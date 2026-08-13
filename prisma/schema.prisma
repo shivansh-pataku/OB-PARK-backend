@@ -3,8 +3,7 @@
 // ====================================================================================
 
 datasource db {
-  provider = "postgresql" //    database management system being used (e.g., postgresql, mysql, sqlite, mongodb)
-  // url      = env("DATABASE_URL") //  database's secure password waala connection path being pulled from env  - will mot be used in this version
+  provider = "postgresql"
 }
 
 // ====================================================================================
@@ -31,7 +30,8 @@ enum Gender {
 
 model Users {
   id               String    @id @default(uuid())
-  phoneNumber      String    @unique
+  firebaseUid      String?   @unique   // <-- NEW: added to match Firebase accounts for google login
+  phoneNumber      String?   @unique // <-- MODIFIED: Adding '?' (making  it optional for Google users)
   email            String?   @unique
   firstName        String?
   lastName         String?
@@ -46,6 +46,7 @@ model Users {
 
   orders   Order[]
   payments Payment[]
+  cart     Cart?
 }
 
 //// PAYMENTS - ORDETS - CHECKOUT TABLES --------------------------
@@ -200,4 +201,27 @@ model Product {
   updatedAt           DateTime  @updatedAt
 
   @@index([categoryId])
+}
+
+model Cart {
+  id        String     @id @default(uuid())
+  userId    String     @unique
+  user      Users      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id        String   @id @default(uuid())
+  cartId    String
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId String
+  quantity  Int      @default(1)
+  color     String?
+  size      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([cartId, productId, color, size])
 }

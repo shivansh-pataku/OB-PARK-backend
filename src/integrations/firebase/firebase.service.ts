@@ -9,7 +9,7 @@ import { getAuth } from 'firebase-admin/auth';
 
 @Injectable()
 export class FirebaseService implements OnModuleInit {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(private readonly configService: ConfigService) { }
 
   onModuleInit() {
     if (!getApps().length) {
@@ -51,8 +51,8 @@ export class FirebaseService implements OnModuleInit {
       firebaseIdToken.startsWith('mock-token')
     ) {
       // Extract the phone number if specified, e.g. mock-token-919999999999, or use a default
-      const parts = firebaseIdToken.split('-');
-      const phoneNumber = parts[2] ? `+${parts[2]}` : '+919999999999';
+      const parts = firebaseIdToken.split('-'); // mock-token-919999999999
+      const phoneNumber = parts[2] ? `+${parts[2]}` : '+919999999999'; // +919999999999
 
       console.log(
         `[FirebaseService] Bypassing verification. Returning mock user with phone number: ${phoneNumber}`,

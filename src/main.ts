@@ -17,6 +17,8 @@ async function bootstrap() {
     }),
   );
 
+  app.enableCors({ origin: ['http://localhost:3000', 'http://localhost:3001'], credentials: true, }); // credentials means cookies are sent
+
   const configService = app.get(ConfigService);
   const port = configService.get<number>('app.port') ?? 3000;
 

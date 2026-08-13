@@ -11,12 +11,14 @@ import { Request } from 'express';
 import { ApiExcludeController } from '@nestjs/swagger';
 
 import { PaymentService } from '../payment.service';
+import { Public } from '../../../common/decorators/public.decorator';
 
 @ApiExcludeController()
 @Controller('payment/webhook')
 export class WebhookController {
   constructor(private readonly paymentService: PaymentService) {}
 
+  @Public()
   @Post('razorpay')
   @HttpCode(200)
   async razorpayWebhook(

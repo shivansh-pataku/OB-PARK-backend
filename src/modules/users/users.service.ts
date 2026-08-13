@@ -1,11 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma/prisma.service';
-// import { UpdateProfileDto } from './dto/update-profile.dto';
-import { UpdateProfileDto } from './dto/update-profile.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async findByPhoneNumber(phoneNumber: string) {
     return this.prisma.users.findUnique({
@@ -15,22 +13,48 @@ export class UsersService {
     });
   }
 
-  async createUser(phoneNumber: string) {
-    return this.prisma.users.create({
-      data: {
-        phoneNumber,
+  async findByFirebaseUid(firebaseUid: string) {
+    return this.prisma.users.findUnique({
+      where: {
+        firebaseUid,
       },
     });
   }
 
-  // async updateProfile(id: string, dto: UpdateProfileDto) {
-  //   return this.prisma.users.update({
-  //     where: {
-  //       id,
-  //     },
-  //     data: dto,
-  //   });
-  // }
+  async findByEmail(email: string) {
+    return this.prisma.users.findUnique({
+      where: {
+        email,
+      },
+    });
+  }
+
+  async linkFirebaseUid(id: string, firebaseUid: string) {
+    return this.prisma.users.update({
+      where: { id },
+      data: { firebaseUid },
+    });
+  }
+
+  async createUser(data: {
+    firebaseUid: string;
+    phoneNumber?: string | null;
+    email?: string | null;
+    firstName?: string | null;
+    lastName?: string | null;
+    profileImage?: string | null;
+  }) {
+    return this.prisma.users.create({
+      data: {
+        firebaseUid: data.firebaseUid,
+        phoneNumber: data.phoneNumber || null,
+        email: data.email || null,
+        firstName: data.firstName || null,
+        lastName: data.lastName || null,
+        profileImage: data.profileImage || null,
+      },
+    });
+  }
 
   async updateRefreshToken(id: string, refreshTokenHash: string) {
     return this.prisma.users.update({

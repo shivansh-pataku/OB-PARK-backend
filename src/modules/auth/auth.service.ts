@@ -12,13 +12,9 @@ import { RefreshTokenDto } from './dto/refresh-token.dto';
 export class AuthService {
   constructor(
     private readonly firebaseService: FirebaseService,
-    private readonly usersService: UsersService,
+    private readonly UsersService: UsersService,
     private readonly jwtService: JwtService,
-  ) {}
-
-  // =====================================================
-  // Generate Access Token
-  // =====================================================
+  ) { }
 
   private async generateAccessToken(user: any) {
     return this.jwtService.signAsync({
@@ -26,10 +22,6 @@ export class AuthService {
       phoneNumber: user.phoneNumber,
     });
   }
-
-  // =====================================================
-  // Generate Refresh Token
-  // =====================================================
 
   private async generateRefreshToken(user: any) {
     return this.jwtService.signAsync(
@@ -43,47 +35,57 @@ export class AuthService {
     );
   }
 
-  // =====================================================
-  // Login
-  // =====================================================
-
-  /// testing function for login, will be removed once firebase is connected
-
   async login(dto: LoginDto) {
-    /// Temporary mock until Firebase is connected
+    const firebaseUser = await this.firebaseService.verifyIdToken(dto.firebaseIdToken);
 
-    //   const firebaseUser = {
-    //     uid: 'test_uid',
-    //     phoneNumber: '9816045869',
-    //   };
-
-    /// Actual login function
-
-    const firebaseUser = await this.firebaseService.verifyIdToken(
-      dto.firebaseIdToken,
-    );
-
+    const firebaseUid = firebaseUser.uid;
     const phoneNumber = firebaseUser.phone_number || firebaseUser.phoneNumber;
+    const email = firebaseUser.email;
+    const name = firebaseUser.name || '';
+    const profileImage = firebaseUser.picture;
 
-    if (!phoneNumber) {
-      throw new UnauthorizedException(
-        'Phone number not found in Firebase token.',
-      );
+    let user: any = null;
+
+    // 1. Search by unique Firebase UID first
+    user = await this.UsersService.findByFirebaseUid(firebaseUid);
+
+    // 2. Search by Phone Number
+    if (!user && phoneNumber) {
+      user = await this.UsersService.findByPhoneNumber(phoneNumber);
+      if (user) {
+        user = await this.UsersService.linkFirebaseUid(user.id, firebaseUid);
+      }
     }
 
-    let user = await this.usersService.findByPhoneNumber(phoneNumber);
+    // 3. Search by Email
+    if (!user && email) {
+      user = await this.UsersService.findByEmail(email);
+      if (user) {
+        user = await this.UsersService.linkFirebaseUid(user.id, firebaseUid);
+      }
+    }
 
+    // 4. Create new user if not found in any search
     if (!user) {
-      user = await this.usersService.createUser(phoneNumber);
+      const nameParts = name.trim().split(' ');
+      const firstName = nameParts[0] || 'User';
+      const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : null;
+
+      user = await this.UsersService.createUser({
+        firebaseUid,
+        phoneNumber,
+        email,
+        firstName,
+        lastName,
+        profileImage,
+      });
     }
 
     const accessToken = await this.generateAccessToken(user);
-
     const refreshToken = await this.generateRefreshToken(user);
-
     const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
 
-    await this.usersService.updateRefreshToken(user.id, refreshTokenHash);
+    await this.UsersService.updateRefreshToken(user.id, refreshTokenHash);
 
     return {
       success: true,
@@ -94,21 +96,21 @@ export class AuthService {
     };
   }
 
-  // =====================================================
-  // Mock Login (For Developer Swagger / API Testing)
-  // =====================================================
   async mockLogin() {
     const phoneNumber = '+919876543210';
-    let user = await this.usersService.findByPhoneNumber(phoneNumber);
+    let user = await this.UsersService.findByPhoneNumber(phoneNumber);
 
     if (!user) {
-      user = await this.usersService.createUser(phoneNumber);
+      user = await this.UsersService.createUser({
+        firebaseUid: 'mock_uid_12345',
+        phoneNumber,
+      });
     }
 
     const accessToken = await this.generateAccessToken(user);
     const refreshToken = await this.generateRefreshToken(user);
     const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
-    await this.usersService.updateRefreshToken(user.id, refreshTokenHash);
+    await this.UsersService.updateRefreshToken(user.id, refreshTokenHash);
 
     return {
       success: true,
@@ -119,16 +121,12 @@ export class AuthService {
     };
   }
 
-  // =====================================================
-  // Refresh Access Token
-  // =====================================================
-
   async refresh(dto: RefreshTokenDto) {
     const payload = await this.jwtService.verifyAsync(dto.refreshToken, {
       secret: process.env.JWT_REFRESH_SECRET!,
     });
 
-    const user = await this.usersService.findById(payload.sub);
+    const user = await this.UsersService.findById(payload.sub);
 
     if (!user) {
       throw new UnauthorizedException('User not found.');
@@ -156,7 +154,7 @@ export class AuthService {
   }
 
   async logout(userId: string) {
-    await this.usersService.removeRefreshToken(userId);
+    await this.UsersService.removeRefreshToken(userId);
 
     return {
       success: true,

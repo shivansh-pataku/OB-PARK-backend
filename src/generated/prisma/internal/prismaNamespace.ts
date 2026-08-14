@@ -389,6 +389,8 @@ export const ModelName = {
   OrderItem: 'OrderItem',
   Payment: 'Payment',
   PaymentAttempt: 'PaymentAttempt',
+  InvestorRequest: 'InvestorRequest',
+  newsletterSubscription: 'newsletterSubscription',
   User: 'User',
   Category: 'Category',
   Product: 'Product',
@@ -409,7 +411,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "users" | "order" | "orderItem" | "payment" | "paymentAttempt" | "user" | "category" | "product" | "cart" | "cartItem"
+    modelProps: "users" | "order" | "orderItem" | "payment" | "paymentAttempt" | "investorRequest" | "newsletterSubscription" | "user" | "category" | "product" | "cart" | "cartItem"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -780,6 +782,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.PaymentAttemptCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.PaymentAttemptCountAggregateOutputType> | number
+        }
+      }
+    }
+    InvestorRequest: {
+      payload: Prisma.$InvestorRequestPayload<ExtArgs>
+      fields: Prisma.InvestorRequestFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.InvestorRequestFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestorRequestPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.InvestorRequestFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestorRequestPayload>
+        }
+        findFirst: {
+          args: Prisma.InvestorRequestFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestorRequestPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.InvestorRequestFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestorRequestPayload>
+        }
+        findMany: {
+          args: Prisma.InvestorRequestFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestorRequestPayload>[]
+        }
+        create: {
+          args: Prisma.InvestorRequestCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestorRequestPayload>
+        }
+        createMany: {
+          args: Prisma.InvestorRequestCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.InvestorRequestCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestorRequestPayload>[]
+        }
+        delete: {
+          args: Prisma.InvestorRequestDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestorRequestPayload>
+        }
+        update: {
+          args: Prisma.InvestorRequestUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestorRequestPayload>
+        }
+        deleteMany: {
+          args: Prisma.InvestorRequestDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.InvestorRequestUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.InvestorRequestUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestorRequestPayload>[]
+        }
+        upsert: {
+          args: Prisma.InvestorRequestUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestorRequestPayload>
+        }
+        aggregate: {
+          args: Prisma.InvestorRequestAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInvestorRequest>
+        }
+        groupBy: {
+          args: Prisma.InvestorRequestGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvestorRequestGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.InvestorRequestCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvestorRequestCountAggregateOutputType> | number
+        }
+      }
+    }
+    newsletterSubscription: {
+      payload: Prisma.$newsletterSubscriptionPayload<ExtArgs>
+      fields: Prisma.newsletterSubscriptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.newsletterSubscriptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$newsletterSubscriptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.newsletterSubscriptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$newsletterSubscriptionPayload>
+        }
+        findFirst: {
+          args: Prisma.newsletterSubscriptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$newsletterSubscriptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.newsletterSubscriptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$newsletterSubscriptionPayload>
+        }
+        findMany: {
+          args: Prisma.newsletterSubscriptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$newsletterSubscriptionPayload>[]
+        }
+        create: {
+          args: Prisma.newsletterSubscriptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$newsletterSubscriptionPayload>
+        }
+        createMany: {
+          args: Prisma.newsletterSubscriptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.newsletterSubscriptionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$newsletterSubscriptionPayload>[]
+        }
+        delete: {
+          args: Prisma.newsletterSubscriptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$newsletterSubscriptionPayload>
+        }
+        update: {
+          args: Prisma.newsletterSubscriptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$newsletterSubscriptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.newsletterSubscriptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.newsletterSubscriptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.newsletterSubscriptionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$newsletterSubscriptionPayload>[]
+        }
+        upsert: {
+          args: Prisma.newsletterSubscriptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$newsletterSubscriptionPayload>
+        }
+        aggregate: {
+          args: Prisma.NewsletterSubscriptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNewsletterSubscription>
+        }
+        groupBy: {
+          args: Prisma.newsletterSubscriptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NewsletterSubscriptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.newsletterSubscriptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NewsletterSubscriptionCountAggregateOutputType> | number
         }
       }
     }
@@ -1281,6 +1431,31 @@ export const PaymentAttemptScalarFieldEnum = {
 export type PaymentAttemptScalarFieldEnum = (typeof PaymentAttemptScalarFieldEnum)[keyof typeof PaymentAttemptScalarFieldEnum]
 
 
+export const InvestorRequestScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  phoneNumber: 'phoneNumber',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InvestorRequestScalarFieldEnum = (typeof InvestorRequestScalarFieldEnum)[keyof typeof InvestorRequestScalarFieldEnum]
+
+
+export const NewsletterSubscriptionScalarFieldEnum = {
+  id: 'id',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  isNewsletterSub: 'isNewsletterSub',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NewsletterSubscriptionScalarFieldEnum = (typeof NewsletterSubscriptionScalarFieldEnum)[keyof typeof NewsletterSubscriptionScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   firstName: 'firstName',
@@ -1678,6 +1853,8 @@ export type GlobalOmitConfig = {
   orderItem?: Prisma.OrderItemOmit
   payment?: Prisma.PaymentOmit
   paymentAttempt?: Prisma.PaymentAttemptOmit
+  investorRequest?: Prisma.InvestorRequestOmit
+  newsletterSubscription?: Prisma.newsletterSubscriptionOmit
   user?: Prisma.UserOmit
   category?: Prisma.CategoryOmit
   product?: Prisma.ProductOmit

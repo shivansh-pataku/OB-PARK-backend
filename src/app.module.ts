@@ -14,6 +14,8 @@ import { join } from 'path';
 import { VehicleModule } from './modules/vehicle/vehicle.module';
 import { ProductsModule } from './modules/products/products.module';
 import { PaymentModule } from './modules/payment/payment.module';
+import { FormsModule } from './modules/forms/forms.module';
+
 
 @Module({
   imports: [
@@ -34,10 +36,8 @@ import { PaymentModule } from './modules/payment/payment.module';
     UsersModule,
     StorageModule,
     ProductsModule,
-    ServeStaticModule.forRoot({
-      rootPath: join(process.cwd(), 'uploads'),
-      serveRoot: '/uploads',
-    }),
+    ServeStaticModule.forRoot({ rootPath: join(process.cwd(), 'uploads'), serveRoot: '/uploads', }),
+    FormsModule,
   ],
 
   providers: [
@@ -47,4 +47,4 @@ import { PaymentModule } from './modules/payment/payment.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }

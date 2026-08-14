@@ -43,6 +43,16 @@ export type Payment = Prisma.PaymentModel
  */
 export type PaymentAttempt = Prisma.PaymentAttemptModel
 /**
+ * Model InvestorRequest
+ * 
+ */
+export type InvestorRequest = Prisma.InvestorRequestModel
+/**
+ * Model newsletterSubscription
+ * 
+ */
+export type newsletterSubscription = Prisma.newsletterSubscriptionModel
+/**
  * Model User
  * 
  */

@@ -155,6 +155,26 @@ model PaymentAttempt {
   @@index([paymentId])
 }
 
+model InvestorRequest {
+  id          String   @id @default(uuid())
+  name        String
+  email       String
+  phoneNumber String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+
+model newsletterSubscription {
+  id              String   @id @default(uuid())
+  firstName       String
+  lastName        String
+  email           String   @unique
+  isNewsletterSub Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
 //// newsletter table  temporary ----------------------------------
 
 model User {
@@ -166,6 +186,7 @@ model User {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
+
 
 model Category {
   id               String    @id @default(uuid())

@@ -12,16 +12,20 @@ import { PaymentGateway } from '../../../generated/prisma/enums';
 export class CreatePaymentDto {
   @ApiProperty({
     example: 'prod-1',
+    required: false,
   })
+  @IsOptional()
   @IsString()
-  productId: string;
+  productId?: string;
 
   @ApiProperty({
     example: 1,
+    required: false,
   })
+  @IsOptional()
   @IsInt()
   @Min(1)
-  quantity: number;
+  quantity?: number;
 
   @ApiProperty({
     enum: PaymentGateway,

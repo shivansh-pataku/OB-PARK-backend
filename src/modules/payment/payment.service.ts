@@ -30,12 +30,56 @@ export class PaymentService {
   async createPayment(dto: CreatePaymentDto, user: any) {
     const userId = user.sub;
 
-    // 1. Fetch Product
-    const product = this.productsService.getProductById(dto.productId);
+    let subtotal = 0;
+    const orderItems: any[] = [];
 
-    // 2. Pricing calculations
-    const subtotal = Number(product.price) * dto.quantity;
+    if (dto.productId) {
+      // 1. Fetch Product for single checkout
+      const product = this.productsService.getProductById(dto.productId);
+      if (!product) {
+        throw new BadRequestException('Product not found');
+      }
+      const qty = dto.quantity || 1;
+      const itemSubtotal = Number(product.price) * qty;
+      subtotal = itemSubtotal;
+      orderItems.push({
+        productId: product.productId || String(product.id),
+        productName: product.title,
+        productImage: product.imagePath,
+        quantity: qty,
+        unitPrice: product.price,
+        totalPrice: itemSubtotal,
+      });
+    } else {
+      // 2. Fetch User's Cart from database
+      const cart = await this.prisma.cart.findUnique({
+        where: { userId },
+        include: { items: true },
+      });
+      if (!cart || !cart.items || cart.items.length === 0) {
+        throw new BadRequestException('Your cart is empty');
+      }
 
+      for (const item of cart.items) {
+        const product = this.productsService.getProductById(item.productId);
+        if (!product) {
+          throw new BadRequestException(`Product ${item.productId} not found`);
+        }
+        const itemPrice = Number(product.price);
+        const itemSubtotal = itemPrice * item.quantity;
+        subtotal += itemSubtotal;
+        orderItems.push({
+          productId: product.productId || String(product.id),
+          productName: product.title,
+          productImage: product.imagePath,
+          quantity: item.quantity,
+          unitPrice: product.price,
+          totalPrice: itemSubtotal,
+        });
+      }
+    }
+
+    // 3. Pricing calculations
     let discount = 0;
     if (dto.couponCode === 'SAVE100') {
       discount = Math.min(100, subtotal);
@@ -46,7 +90,7 @@ export class PaymentService {
     const totalAmount = subtotal - discount + tax + shippingCharge;
     const orderNumber = `OP-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
 
-    // 3. Create Order and OrderItem in the database
+    // 4. Create Order and OrderItems in the database
     const order = await this.prisma.order.create({
       data: {
         orderNumber,
@@ -59,19 +103,12 @@ export class PaymentService {
         currency: 'INR',
         status: OrderStatus.PENDING,
         items: {
-          create: {
-            productId: product.id,
-            productName: product.title,
-            productImage: product.imagePath,
-            quantity: dto.quantity,
-            unitPrice: product.price,
-            totalPrice: subtotal,
-          },
+          create: orderItems,
         },
       },
     });
 
-    // 4. Create payment order on gateway (Razorpay expects amount in paise)
+    // 5. Create payment order on gateway (Razorpay expects amount in paise)
     const amountInPaise = Math.round(totalAmount * 100);
     let gatewayOrderId: string | null = null;
 
@@ -84,7 +121,7 @@ export class PaymentService {
       gatewayOrderId = razorpayOrder.id;
     }
 
-    // 5. Create Payment record in the database
+    // 6. Create Payment record in the database
     await this.prisma.payment.create({
       data: {
         orderId: order.id,
@@ -97,7 +134,7 @@ export class PaymentService {
       },
     });
 
-    // 6. Return response to initialize Razorpay checkout
+    // 7. Return response to initialize Razorpay checkout
     return {
       orderId: order.id,
       orderNumber: order.orderNumber,
@@ -205,6 +242,28 @@ export class PaymentService {
         },
       }),
     ]);
+
+    // Clear purchased matching cart items
+    try {
+      const orderItems = await this.prisma.orderItem.findMany({
+        where: { orderId: payment.orderId },
+      });
+      const cart = await this.prisma.cart.findUnique({
+        where: { userId },
+        include: { items: true },
+      });
+      if (cart && cart.items.length > 0) {
+        const productIdsInOrder = orderItems.map((item) => item.productId);
+        await this.prisma.cartItem.deleteMany({
+          where: {
+            cartId: cart.id,
+            productId: { in: productIdsInOrder },
+          },
+        });
+      }
+    } catch (err) {
+      console.error('Failed to clear cart items after checkout:', err);
+    }
 
     return {
       success: true,

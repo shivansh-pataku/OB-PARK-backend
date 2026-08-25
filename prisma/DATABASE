@@ -1,0 +1,278 @@
+// ====================================================================================
+// DATABASE CONNECTION BLOCK
+// ====================================================================================
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ====================================================================================
+// PRISMA CLIENT GENERATOR BLOCK
+// ====================================================================================
+
+generator client {
+  provider = "prisma-client" // Prisma ORM should generate types and methods for JavaScript/TypeScript
+  output   = "../src/generated/prisma"
+}
+
+// ========================================================
+// Database tables from here
+// ========================================================
+
+//// Actual users table ----------------------------------
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  PREFER_NOT_TO_SAY
+}
+
+model Users {
+  id               String    @id @default(uuid())
+  firebaseUid      String?   @unique   // <-- NEW: added to match Firebase accounts for google login
+  phoneNumber      String?   @unique // <-- MODIFIED: Adding '?' (making  it optional for Google users)
+  email            String?   @unique
+  firstName        String?
+  lastName         String?
+  address          String?
+  dob              DateTime?
+  gender           Gender?
+  profileImage     String?
+  isActive         Boolean   @default(true)
+  refreshTokenHash String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  orders   Order[]
+  payments Payment[]
+  cart     Cart?
+}
+
+//// PAYMENTS - ORDETS - CHECKOUT TABLES --------------------------
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentGateway {
+  RAZORPAY
+  PAYU
+}
+
+enum PaymentMethod {
+  UPI
+  CARD
+  NET_BANKING
+  WALLET
+  EMI
+  PAY_LATER
+  UNKNOWN
+}
+
+model Order {
+  id          String @id @default(uuid())
+  orderNumber String @unique
+  userId String
+  user   Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subtotal       Decimal @db.Decimal(10, 2)
+  discount       Decimal @default(0) @db.Decimal(10, 2)
+  tax            Decimal @default(0) @db.Decimal(10, 2)
+  shippingCharge Decimal @default(0) @db.Decimal(10, 2)
+  totalAmount    Decimal @db.Decimal(10, 2)
+  currency String @default("INR")
+  status OrderStatus @default(PENDING)
+  shippingAddress Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  items    OrderItem[]
+  payments Payment[]
+  @@index([userId])
+}
+
+model OrderItem {
+  id String @id @default(uuid())
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  productName String
+  productImage String?
+  quantity Int
+  unitPrice  Decimal  @db.Decimal(10, 2)
+  totalPrice Decimal  @db.Decimal(10, 2)
+  createdAt  DateTime @default(now())
+  @@index([orderId])
+}
+
+model Payment {
+  id       String         @id @default(uuid())
+  orderId  String
+  order    Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  userId   String
+  user     Users          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  gateway  PaymentGateway
+  amount   Decimal        @db.Decimal(10, 2)
+  currency String         @default("INR")
+  status   PaymentStatus  @default(PENDING)
+
+  gatewayOrderId String? @unique
+  gatewayPaymentId String?
+  transactionId String?
+  gatewaySignature String?
+  paymentMethod PaymentMethod @default(UNKNOWN)
+  failureReason String?
+  paidAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  attempts PaymentAttempt[]
+
+  @@index([orderId])
+  @@index([userId])
+}
+
+model PaymentAttempt {
+  id String @id @default(uuid())
+  paymentId String
+  payment   Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  status PaymentStatus
+  paymentMethod PaymentMethod
+  gatewayTransactionId String?
+  failureReason String?
+  createdAt DateTime @default(now())
+  @@index([paymentId])
+}
+
+model InvestorRequest {
+  id          String   @id @default(uuid())
+  name        String
+  email       String
+  phoneNumber String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+
+model newsletterSubscription {
+  id              String   @id @default(uuid())
+  firstName       String
+  lastName        String
+  email           String   @unique
+  isNewsletterSub Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+//// newsletter table  temporary ----------------------------------
+
+model User {
+  id              String   @id @default(uuid())
+  firstName       String
+  lastName        String
+  email           String   @unique
+  isNewsletterSub Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+
+model Category {
+  id               String    @id @default(uuid())
+  categoryName     String
+  slug             String    @unique
+  imagePath        String?
+  shortDescription String?
+  products         Product[]
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model Product {
+  id                  String    @id @default(uuid())
+  title               String
+  brand               String
+  price               Decimal   @db.Decimal(10, 2)
+  currencySymbol      String    @default("$")
+  imagePath           String?
+  galleryImages       String[]
+  discountText        String?
+  averageRating       Float     @default(0)
+  totalReviewsCount   Int       @default(0)
+  boughtPastMonthText String?
+  soldLastWeekText    String?
+  categoryId          String
+  category            Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  attributes          Json?
+  aboutSections       Json?
+  shippingBadges      String[]
+  reviewsBreakdown    Json?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@index([categoryId])
+}
+
+// Cart Table------------------------------------------------------------------------------------
+
+
+model Cart {
+  id        String     @id @default(uuid())
+  userId    String     @unique
+  user      Users      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id        String   @id @default(uuid())
+  cartId    String
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId String
+  quantity  Int      @default(1)
+  color     String?
+  size      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([cartId, productId, color, size])
+}
+
+// User's Shipping Details and Address Table --------------------------------------------------------------
+
+model Address {
+  id           String   @id @default(uuid())
+  userId       String
+  user         Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName     String
+  phoneNumber  String
+  addressLine1 String
+  addressLine2 String?
+  city         String
+  state        String
+  zipCode      String
+  country      String   @default("India")
+  isDefault    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
+}
+
+
+
+
+
+//  Wish List Table ------------------------------------------------------------------

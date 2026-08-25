@@ -35,6 +35,7 @@ export type UsersMinAggregateOutputType = {
   dob: Date | null
   gender: $Enums.Gender | null
   profileImage: string | null
+  updates: boolean | null
   isActive: boolean | null
   refreshTokenHash: string | null
   createdAt: Date | null
@@ -52,6 +53,7 @@ export type UsersMaxAggregateOutputType = {
   dob: Date | null
   gender: $Enums.Gender | null
   profileImage: string | null
+  updates: boolean | null
   isActive: boolean | null
   refreshTokenHash: string | null
   createdAt: Date | null
@@ -69,6 +71,7 @@ export type UsersCountAggregateOutputType = {
   dob: number
   gender: number
   profileImage: number
+  updates: number
   isActive: number
   refreshTokenHash: number
   createdAt: number
@@ -88,6 +91,7 @@ export type UsersMinAggregateInputType = {
   dob?: true
   gender?: true
   profileImage?: true
+  updates?: true
   isActive?: true
   refreshTokenHash?: true
   createdAt?: true
@@ -105,6 +109,7 @@ export type UsersMaxAggregateInputType = {
   dob?: true
   gender?: true
   profileImage?: true
+  updates?: true
   isActive?: true
   refreshTokenHash?: true
   createdAt?: true
@@ -122,6 +127,7 @@ export type UsersCountAggregateInputType = {
   dob?: true
   gender?: true
   profileImage?: true
+  updates?: true
   isActive?: true
   refreshTokenHash?: true
   createdAt?: true
@@ -212,6 +218,7 @@ export type UsersGroupByOutputType = {
   dob: Date | null
   gender: $Enums.Gender | null
   profileImage: string | null
+  updates: boolean
   isActive: boolean
   refreshTokenHash: string | null
   createdAt: Date
@@ -250,6 +257,7 @@ export type UsersWhereInput = {
   dob?: Prisma.DateTimeNullableFilter<"Users"> | Date | string | null
   gender?: Prisma.EnumGenderNullableFilter<"Users"> | $Enums.Gender | null
   profileImage?: Prisma.StringNullableFilter<"Users"> | string | null
+  updates?: Prisma.BoolFilter<"Users"> | boolean
   isActive?: Prisma.BoolFilter<"Users"> | boolean
   refreshTokenHash?: Prisma.StringNullableFilter<"Users"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Users"> | Date | string
@@ -257,6 +265,7 @@ export type UsersWhereInput = {
   orders?: Prisma.OrderListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
   cart?: Prisma.XOR<Prisma.CartNullableScalarRelationFilter, Prisma.CartWhereInput> | null
+  addresses?: Prisma.AddressListRelationFilter
 }
 
 export type UsersOrderByWithRelationInput = {
@@ -270,6 +279,7 @@ export type UsersOrderByWithRelationInput = {
   dob?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrderInput | Prisma.SortOrder
   profileImage?: Prisma.SortOrderInput | Prisma.SortOrder
+  updates?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   refreshTokenHash?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -277,6 +287,7 @@ export type UsersOrderByWithRelationInput = {
   orders?: Prisma.OrderOrderByRelationAggregateInput
   payments?: Prisma.PaymentOrderByRelationAggregateInput
   cart?: Prisma.CartOrderByWithRelationInput
+  addresses?: Prisma.AddressOrderByRelationAggregateInput
 }
 
 export type UsersWhereUniqueInput = Prisma.AtLeast<{
@@ -293,6 +304,7 @@ export type UsersWhereUniqueInput = Prisma.AtLeast<{
   dob?: Prisma.DateTimeNullableFilter<"Users"> | Date | string | null
   gender?: Prisma.EnumGenderNullableFilter<"Users"> | $Enums.Gender | null
   profileImage?: Prisma.StringNullableFilter<"Users"> | string | null
+  updates?: Prisma.BoolFilter<"Users"> | boolean
   isActive?: Prisma.BoolFilter<"Users"> | boolean
   refreshTokenHash?: Prisma.StringNullableFilter<"Users"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Users"> | Date | string
@@ -300,6 +312,7 @@ export type UsersWhereUniqueInput = Prisma.AtLeast<{
   orders?: Prisma.OrderListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
   cart?: Prisma.XOR<Prisma.CartNullableScalarRelationFilter, Prisma.CartWhereInput> | null
+  addresses?: Prisma.AddressListRelationFilter
 }, "id" | "firebaseUid" | "phoneNumber" | "email">
 
 export type UsersOrderByWithAggregationInput = {
@@ -313,6 +326,7 @@ export type UsersOrderByWithAggregationInput = {
   dob?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrderInput | Prisma.SortOrder
   profileImage?: Prisma.SortOrderInput | Prisma.SortOrder
+  updates?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   refreshTokenHash?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -336,6 +350,7 @@ export type UsersScalarWhereWithAggregatesInput = {
   dob?: Prisma.DateTimeNullableWithAggregatesFilter<"Users"> | Date | string | null
   gender?: Prisma.EnumGenderNullableWithAggregatesFilter<"Users"> | $Enums.Gender | null
   profileImage?: Prisma.StringNullableWithAggregatesFilter<"Users"> | string | null
+  updates?: Prisma.BoolWithAggregatesFilter<"Users"> | boolean
   isActive?: Prisma.BoolWithAggregatesFilter<"Users"> | boolean
   refreshTokenHash?: Prisma.StringNullableWithAggregatesFilter<"Users"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Users"> | Date | string
@@ -353,6 +368,7 @@ export type UsersCreateInput = {
   dob?: Date | string | null
   gender?: $Enums.Gender | null
   profileImage?: string | null
+  updates?: boolean
   isActive?: boolean
   refreshTokenHash?: string | null
   createdAt?: Date | string
@@ -360,6 +376,7 @@ export type UsersCreateInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
 }
 
 export type UsersUncheckedCreateInput = {
@@ -373,6 +390,7 @@ export type UsersUncheckedCreateInput = {
   dob?: Date | string | null
   gender?: $Enums.Gender | null
   profileImage?: string | null
+  updates?: boolean
   isActive?: boolean
   refreshTokenHash?: string | null
   createdAt?: Date | string
@@ -380,6 +398,7 @@ export type UsersUncheckedCreateInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsersUpdateInput = {
@@ -393,6 +412,7 @@ export type UsersUpdateInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updates?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   refreshTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -400,6 +420,7 @@ export type UsersUpdateInput = {
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
 }
 
 export type UsersUncheckedUpdateInput = {
@@ -413,6 +434,7 @@ export type UsersUncheckedUpdateInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updates?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   refreshTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -420,6 +442,7 @@ export type UsersUncheckedUpdateInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UsersCreateManyInput = {
@@ -433,6 +456,7 @@ export type UsersCreateManyInput = {
   dob?: Date | string | null
   gender?: $Enums.Gender | null
   profileImage?: string | null
+  updates?: boolean
   isActive?: boolean
   refreshTokenHash?: string | null
   createdAt?: Date | string
@@ -450,6 +474,7 @@ export type UsersUpdateManyMutationInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updates?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   refreshTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -467,6 +492,7 @@ export type UsersUncheckedUpdateManyInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updates?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   refreshTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -484,6 +510,7 @@ export type UsersCountOrderByAggregateInput = {
   dob?: Prisma.SortOrder
   gender?: Prisma.SortOrder
   profileImage?: Prisma.SortOrder
+  updates?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   refreshTokenHash?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -501,6 +528,7 @@ export type UsersMaxOrderByAggregateInput = {
   dob?: Prisma.SortOrder
   gender?: Prisma.SortOrder
   profileImage?: Prisma.SortOrder
+  updates?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   refreshTokenHash?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -518,6 +546,7 @@ export type UsersMinOrderByAggregateInput = {
   dob?: Prisma.SortOrder
   gender?: Prisma.SortOrder
   profileImage?: Prisma.SortOrder
+  updates?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   refreshTokenHash?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -595,6 +624,20 @@ export type UsersUpdateOneRequiredWithoutCartNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UsersUpdateToOneWithWhereWithoutCartInput, Prisma.UsersUpdateWithoutCartInput>, Prisma.UsersUncheckedUpdateWithoutCartInput>
 }
 
+export type UsersCreateNestedOneWithoutAddressesInput = {
+  create?: Prisma.XOR<Prisma.UsersCreateWithoutAddressesInput, Prisma.UsersUncheckedCreateWithoutAddressesInput>
+  connectOrCreate?: Prisma.UsersCreateOrConnectWithoutAddressesInput
+  connect?: Prisma.UsersWhereUniqueInput
+}
+
+export type UsersUpdateOneRequiredWithoutAddressesNestedInput = {
+  create?: Prisma.XOR<Prisma.UsersCreateWithoutAddressesInput, Prisma.UsersUncheckedCreateWithoutAddressesInput>
+  connectOrCreate?: Prisma.UsersCreateOrConnectWithoutAddressesInput
+  upsert?: Prisma.UsersUpsertWithoutAddressesInput
+  connect?: Prisma.UsersWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UsersUpdateToOneWithWhereWithoutAddressesInput, Prisma.UsersUpdateWithoutAddressesInput>, Prisma.UsersUncheckedUpdateWithoutAddressesInput>
+}
+
 export type UsersCreateWithoutOrdersInput = {
   id?: string
   firebaseUid?: string | null
@@ -606,12 +649,14 @@ export type UsersCreateWithoutOrdersInput = {
   dob?: Date | string | null
   gender?: $Enums.Gender | null
   profileImage?: string | null
+  updates?: boolean
   isActive?: boolean
   refreshTokenHash?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
 }
 
 export type UsersUncheckedCreateWithoutOrdersInput = {
@@ -625,12 +670,14 @@ export type UsersUncheckedCreateWithoutOrdersInput = {
   dob?: Date | string | null
   gender?: $Enums.Gender | null
   profileImage?: string | null
+  updates?: boolean
   isActive?: boolean
   refreshTokenHash?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsersCreateOrConnectWithoutOrdersInput = {
@@ -660,12 +707,14 @@ export type UsersUpdateWithoutOrdersInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updates?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   refreshTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
 }
 
 export type UsersUncheckedUpdateWithoutOrdersInput = {
@@ -679,12 +728,14 @@ export type UsersUncheckedUpdateWithoutOrdersInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updates?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   refreshTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UsersCreateWithoutPaymentsInput = {
@@ -698,12 +749,14 @@ export type UsersCreateWithoutPaymentsInput = {
   dob?: Date | string | null
   gender?: $Enums.Gender | null
   profileImage?: string | null
+  updates?: boolean
   isActive?: boolean
   refreshTokenHash?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
 }
 
 export type UsersUncheckedCreateWithoutPaymentsInput = {
@@ -717,12 +770,14 @@ export type UsersUncheckedCreateWithoutPaymentsInput = {
   dob?: Date | string | null
   gender?: $Enums.Gender | null
   profileImage?: string | null
+  updates?: boolean
   isActive?: boolean
   refreshTokenHash?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsersCreateOrConnectWithoutPaymentsInput = {
@@ -752,12 +807,14 @@ export type UsersUpdateWithoutPaymentsInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updates?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   refreshTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
 }
 
 export type UsersUncheckedUpdateWithoutPaymentsInput = {
@@ -771,12 +828,14 @@ export type UsersUncheckedUpdateWithoutPaymentsInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updates?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   refreshTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UsersCreateWithoutCartInput = {
@@ -790,12 +849,14 @@ export type UsersCreateWithoutCartInput = {
   dob?: Date | string | null
   gender?: $Enums.Gender | null
   profileImage?: string | null
+  updates?: boolean
   isActive?: boolean
   refreshTokenHash?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
 }
 
 export type UsersUncheckedCreateWithoutCartInput = {
@@ -809,12 +870,14 @@ export type UsersUncheckedCreateWithoutCartInput = {
   dob?: Date | string | null
   gender?: $Enums.Gender | null
   profileImage?: string | null
+  updates?: boolean
   isActive?: boolean
   refreshTokenHash?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsersCreateOrConnectWithoutCartInput = {
@@ -844,12 +907,14 @@ export type UsersUpdateWithoutCartInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updates?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   refreshTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
 }
 
 export type UsersUncheckedUpdateWithoutCartInput = {
@@ -863,12 +928,114 @@ export type UsersUncheckedUpdateWithoutCartInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updates?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   refreshTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UsersCreateWithoutAddressesInput = {
+  id?: string
+  firebaseUid?: string | null
+  phoneNumber?: string | null
+  email?: string | null
+  firstName?: string | null
+  lastName?: string | null
+  address?: string | null
+  dob?: Date | string | null
+  gender?: $Enums.Gender | null
+  profileImage?: string | null
+  updates?: boolean
+  isActive?: boolean
+  refreshTokenHash?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
+}
+
+export type UsersUncheckedCreateWithoutAddressesInput = {
+  id?: string
+  firebaseUid?: string | null
+  phoneNumber?: string | null
+  email?: string | null
+  firstName?: string | null
+  lastName?: string | null
+  address?: string | null
+  dob?: Date | string | null
+  gender?: $Enums.Gender | null
+  profileImage?: string | null
+  updates?: boolean
+  isActive?: boolean
+  refreshTokenHash?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UsersCreateOrConnectWithoutAddressesInput = {
+  where: Prisma.UsersWhereUniqueInput
+  create: Prisma.XOR<Prisma.UsersCreateWithoutAddressesInput, Prisma.UsersUncheckedCreateWithoutAddressesInput>
+}
+
+export type UsersUpsertWithoutAddressesInput = {
+  update: Prisma.XOR<Prisma.UsersUpdateWithoutAddressesInput, Prisma.UsersUncheckedUpdateWithoutAddressesInput>
+  create: Prisma.XOR<Prisma.UsersCreateWithoutAddressesInput, Prisma.UsersUncheckedCreateWithoutAddressesInput>
+  where?: Prisma.UsersWhereInput
+}
+
+export type UsersUpdateToOneWithWhereWithoutAddressesInput = {
+  where?: Prisma.UsersWhereInput
+  data: Prisma.XOR<Prisma.UsersUpdateWithoutAddressesInput, Prisma.UsersUncheckedUpdateWithoutAddressesInput>
+}
+
+export type UsersUpdateWithoutAddressesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firebaseUid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  refreshTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
+}
+
+export type UsersUncheckedUpdateWithoutAddressesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firebaseUid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  refreshTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
 }
 
 
@@ -879,11 +1046,13 @@ export type UsersUncheckedUpdateWithoutCartInput = {
 export type UsersCountOutputType = {
   orders: number
   payments: number
+  addresses: number
 }
 
 export type UsersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orders?: boolean | UsersCountOutputTypeCountOrdersArgs
   payments?: boolean | UsersCountOutputTypeCountPaymentsArgs
+  addresses?: boolean | UsersCountOutputTypeCountAddressesArgs
 }
 
 /**
@@ -910,6 +1079,13 @@ export type UsersCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.
   where?: Prisma.PaymentWhereInput
 }
 
+/**
+ * UsersCountOutputType without action
+ */
+export type UsersCountOutputTypeCountAddressesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AddressWhereInput
+}
+
 
 export type UsersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -922,6 +1098,7 @@ export type UsersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   dob?: boolean
   gender?: boolean
   profileImage?: boolean
+  updates?: boolean
   isActive?: boolean
   refreshTokenHash?: boolean
   createdAt?: boolean
@@ -929,6 +1106,7 @@ export type UsersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   orders?: boolean | Prisma.Users$ordersArgs<ExtArgs>
   payments?: boolean | Prisma.Users$paymentsArgs<ExtArgs>
   cart?: boolean | Prisma.Users$cartArgs<ExtArgs>
+  addresses?: boolean | Prisma.Users$addressesArgs<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["users"]>
 
@@ -943,6 +1121,7 @@ export type UsersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   dob?: boolean
   gender?: boolean
   profileImage?: boolean
+  updates?: boolean
   isActive?: boolean
   refreshTokenHash?: boolean
   createdAt?: boolean
@@ -960,6 +1139,7 @@ export type UsersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   dob?: boolean
   gender?: boolean
   profileImage?: boolean
+  updates?: boolean
   isActive?: boolean
   refreshTokenHash?: boolean
   createdAt?: boolean
@@ -977,17 +1157,19 @@ export type UsersSelectScalar = {
   dob?: boolean
   gender?: boolean
   profileImage?: boolean
+  updates?: boolean
   isActive?: boolean
   refreshTokenHash?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UsersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firebaseUid" | "phoneNumber" | "email" | "firstName" | "lastName" | "address" | "dob" | "gender" | "profileImage" | "isActive" | "refreshTokenHash" | "createdAt" | "updatedAt", ExtArgs["result"]["users"]>
+export type UsersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firebaseUid" | "phoneNumber" | "email" | "firstName" | "lastName" | "address" | "dob" | "gender" | "profileImage" | "updates" | "isActive" | "refreshTokenHash" | "createdAt" | "updatedAt", ExtArgs["result"]["users"]>
 export type UsersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orders?: boolean | Prisma.Users$ordersArgs<ExtArgs>
   payments?: boolean | Prisma.Users$paymentsArgs<ExtArgs>
   cart?: boolean | Prisma.Users$cartArgs<ExtArgs>
+  addresses?: boolean | Prisma.Users$addressesArgs<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UsersIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -999,6 +1181,7 @@ export type $UsersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     orders: Prisma.$OrderPayload<ExtArgs>[]
     payments: Prisma.$PaymentPayload<ExtArgs>[]
     cart: Prisma.$CartPayload<ExtArgs> | null
+    addresses: Prisma.$AddressPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1011,6 +1194,7 @@ export type $UsersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     dob: Date | null
     gender: $Enums.Gender | null
     profileImage: string | null
+    updates: boolean
     isActive: boolean
     refreshTokenHash: string | null
     createdAt: Date
@@ -1412,6 +1596,7 @@ export interface Prisma__UsersClient<T, Null = never, ExtArgs extends runtime.Ty
   orders<T extends Prisma.Users$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payments<T extends Prisma.Users$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   cart<T extends Prisma.Users$cartArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$cartArgs<ExtArgs>>): Prisma.Prisma__CartClient<runtime.Types.Result.GetResult<Prisma.$CartPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  addresses<T extends Prisma.Users$addressesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$addressesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1451,6 +1636,7 @@ export interface UsersFieldRefs {
   readonly dob: Prisma.FieldRef<"Users", 'DateTime'>
   readonly gender: Prisma.FieldRef<"Users", 'Gender'>
   readonly profileImage: Prisma.FieldRef<"Users", 'String'>
+  readonly updates: Prisma.FieldRef<"Users", 'Boolean'>
   readonly isActive: Prisma.FieldRef<"Users", 'Boolean'>
   readonly refreshTokenHash: Prisma.FieldRef<"Users", 'String'>
   readonly createdAt: Prisma.FieldRef<"Users", 'DateTime'>
@@ -1912,6 +2098,30 @@ export type Users$cartArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   include?: Prisma.CartInclude<ExtArgs> | null
   where?: Prisma.CartWhereInput
+}
+
+/**
+ * Users.addresses
+ */
+export type Users$addressesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Address
+   */
+  select?: Prisma.AddressSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Address
+   */
+  omit?: Prisma.AddressOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AddressInclude<ExtArgs> | null
+  where?: Prisma.AddressWhereInput
+  orderBy?: Prisma.AddressOrderByWithRelationInput | Prisma.AddressOrderByWithRelationInput[]
+  cursor?: Prisma.AddressWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AddressScalarFieldEnum | Prisma.AddressScalarFieldEnum[]
 }
 
 /**

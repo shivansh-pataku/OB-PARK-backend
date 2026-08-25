@@ -15,6 +15,8 @@ import { VehicleModule } from './modules/vehicle/vehicle.module';
 import { ProductsModule } from './modules/products/products.module';
 import { PaymentModule } from './modules/payment/payment.module';
 import { FormsModule } from './modules/forms/forms.module';
+import { CartModule } from './modules/cart/cart.module';
+import { BillingModule } from './modules/billing/billing.module';
 
 
 @Module({
@@ -38,6 +40,8 @@ import { FormsModule } from './modules/forms/forms.module';
     ProductsModule,
     ServeStaticModule.forRoot({ rootPath: join(process.cwd(), 'uploads'), serveRoot: '/uploads', }),
     FormsModule,
+    CartModule,
+    BillingModule
   ],
 
   providers: [

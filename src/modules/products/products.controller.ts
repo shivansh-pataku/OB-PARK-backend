@@ -4,7 +4,7 @@ import { Public } from '../../common/decorators/public.decorator';
 
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(private readonly productsService: ProductsService) { }
 
   @Public()
   @Get('featured')
@@ -22,14 +22,15 @@ export class ProductsController {
   @Get()
   getProducts(
     @Query('category') category?: string,
+    @Query('categoryslug') categoryslug?: string,
     @Query('search') search?: string,
     @Query('limit') limit?: string,
     @Query('offset') offset?: string,
   ) {
-    const parsedLimit = limit ? parseInt(limit, 10) : 10;
-    const parsedOffset = offset ? parseInt(offset, 10) : 0;
+    const parsedLimit = limit ? parseInt(limit, 10) : undefined;
+    const parsedOffset = offset ? parseInt(offset, 10) : undefined;
     return this.productsService.getProducts(
-      category,
+      category || categoryslug,
       search,
       parsedLimit,
       parsedOffset,
@@ -39,7 +40,7 @@ export class ProductsController {
 
 @Controller('categories')
 export class CategoriesController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(private readonly productsService: ProductsService) { }
 
   @Public()
   @Get()

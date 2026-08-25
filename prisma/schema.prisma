@@ -39,14 +39,17 @@ model Users {
   dob              DateTime?
   gender           Gender?
   profileImage     String?
+  updates          Boolean   @default(false)
   isActive         Boolean   @default(true)
   refreshTokenHash String?
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
 
-  orders   Order[]
-  payments Payment[]
-  cart     Cart?
+
+  orders    Order[]
+  payments  Payment[]
+  cart      Cart?
+  addresses Address[]
 }
 
 //// PAYMENTS - ORDETS - CHECKOUT TABLES --------------------------
@@ -104,16 +107,16 @@ model Order {
 }
 
 model OrderItem {
-  id String @id @default(uuid())
-  orderId String
-  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  productId String
+  id          String  @id @default(uuid())
+  orderId     String
+  order       Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId   String
   productName String
   productImage String?
-  quantity Int
-  unitPrice  Decimal  @db.Decimal(10, 2)
-  totalPrice Decimal  @db.Decimal(10, 2)
-  createdAt  DateTime @default(now())
+  quantity    Int
+  unitPrice   Decimal  @db.Decimal(10, 2)
+  totalPrice  Decimal  @db.Decimal(10, 2)
+  createdAt   DateTime @default(now())
   @@index([orderId])
 }
 
@@ -245,4 +248,27 @@ model CartItem {
   updatedAt DateTime @updatedAt
 
   @@unique([cartId, productId, color, size])
+}
+
+// User's Shipping Details and Address Table --------------------------------------------------------------
+
+model Address {
+  id           String   @id @default(uuid())
+  userId       String
+  user         Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  firstName    String
+  lastName     String
+  phoneNumber  String
+  email        String?
+  addressLine1 String
+  addressLine2 String?
+  city         String
+  state        String?
+  zipCode      String
+  country      String   @default("India")
+  isDefault    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
 }

@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
@@ -36,64 +36,72 @@ export class AuthService {
   }
 
   async login(dto: LoginDto) {
-    const firebaseUser = await this.firebaseService.verifyIdToken(dto.firebaseIdToken);
+    try {
+      const firebaseUser = await this.firebaseService.verifyIdToken(dto.firebaseIdToken);
 
-    const firebaseUid = firebaseUser.uid;
-    const phoneNumber = firebaseUser.phone_number || firebaseUser.phoneNumber;
-    const email = firebaseUser.email;
-    const name = firebaseUser.name || '';
-    const profileImage = firebaseUser.picture;
+      const firebaseUid = firebaseUser.uid;
+      const phoneNumber = firebaseUser.phone_number || firebaseUser.phoneNumber || null;
+      const email = firebaseUser.email || null;
+      const name = firebaseUser.name || '';
+      const profileImage = firebaseUser.picture || null;
 
-    let user: any = null;
+      let user: any = null;
 
-    // 1. Search by unique Firebase UID first
-    user = await this.UsersService.findByFirebaseUid(firebaseUid);
+      // 1. Search by unique Firebase UID first
+      user = await this.UsersService.findByFirebaseUid(firebaseUid);
 
-    // 2. Search by Phone Number
-    if (!user && phoneNumber) {
-      user = await this.UsersService.findByPhoneNumber(phoneNumber);
-      if (user) {
-        user = await this.UsersService.linkFirebaseUid(user.id, firebaseUid);
+      // 2. Search by Phone Number if not found
+      if (!user && phoneNumber) {
+        user = await this.UsersService.findByPhoneNumber(phoneNumber);
+        if (user && !user.firebaseUid) {
+          user = await this.UsersService.linkFirebaseUid(user.id, firebaseUid);
+        }
       }
-    }
 
-    // 3. Search by Email
-    if (!user && email) {
-      user = await this.UsersService.findByEmail(email);
-      if (user) {
-        user = await this.UsersService.linkFirebaseUid(user.id, firebaseUid);
+      // 3. Search by Email if not found
+      if (!user && email) {
+        user = await this.UsersService.findByEmail(email);
+        if (user && !user.firebaseUid) {
+          user = await this.UsersService.linkFirebaseUid(user.id, firebaseUid);
+        }
       }
+
+      // 4. Create new user if not found in any search
+      if (!user) {
+        const nameParts = name.trim().split(' ');
+        const firstName = nameParts[0] || 'User';
+        const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : null;
+
+        user = await this.UsersService.createUser({
+          firebaseUid,
+          phoneNumber,
+          email,
+          firstName,
+          lastName,
+          profileImage,
+        });
+      }
+
+      const accessToken = await this.generateAccessToken(user);
+      const refreshToken = await this.generateRefreshToken(user);
+      const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
+
+      await this.UsersService.updateRefreshToken(user.id, refreshTokenHash);
+
+      return {
+        success: true,
+        message: 'Login successful.',
+        accessToken,
+        refreshToken,
+        user,
+      };
+    } catch (error: any) {
+      console.error('[AuthService.login Error]:', error);
+      if (error instanceof UnauthorizedException || error instanceof BadRequestException) {
+        throw error;
+      }
+      throw new UnauthorizedException(error.message || 'Authentication failed');
     }
-
-    // 4. Create new user if not found in any search
-    if (!user) {
-      const nameParts = name.trim().split(' ');
-      const firstName = nameParts[0] || 'User';
-      const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : null;
-
-      user = await this.UsersService.createUser({
-        firebaseUid,
-        phoneNumber,
-        email,
-        firstName,
-        lastName,
-        profileImage,
-      });
-    }
-
-    const accessToken = await this.generateAccessToken(user);
-    const refreshToken = await this.generateRefreshToken(user);
-    const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
-
-    await this.UsersService.updateRefreshToken(user.id, refreshTokenHash);
-
-    return {
-      success: true,
-      message: 'Login successful.',
-      accessToken,
-      refreshToken,
-      user,
-    };
   }
 
   async mockLogin() {

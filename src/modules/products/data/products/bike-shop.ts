@@ -12,7 +12,7 @@ export const bikeShop: CategoryProducts = {
       "productName": "Kratos B4 Bike Phone Holder",
       "productDescription": "A high-quality kratos b4 bike phone holder designed for enhanced comfort and protection during daily rides and long tours.",
       "productRating": 4.2,
-      "productFeatures": [
+      "productFeatures": [ 
         "• Durable Material | • Universal Fit | • Weatherproof Build | • Ergonomic Design"
       ],
       "productCost": 400,

@@ -3,6 +3,7 @@ export default () => ({
     name: process.env.APP_NAME,
     port: parseInt(process.env.PORT || '3000', 10), // 10 means decimal which is the default base for parseInt means it takes the string and converts it to a number in base 10
     environment: process.env.NODE_ENV,
+    corsOrigins: process.env.CORS_ORIGINS || '',
   },
 
   database: {

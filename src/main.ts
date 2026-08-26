@@ -41,6 +41,11 @@ async function bootstrap() {
         return callback(null, true);
       }
 
+      // Match Vercel preview/production deployments (e.g. obpark-xxx-user-projects.vercel.app)
+      if (/^https:\/\/obpark(?:-[a-zA-Z0-9]+)*(?:-projects)?\.vercel\.app$/.test(origin)) {
+        return callback(null, true);
+      }
+
       // Match any local dev port
       if (/^http:\/\/localhost:\d+$/.test(origin)) {
         return callback(null, true);

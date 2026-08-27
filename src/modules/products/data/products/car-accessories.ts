@@ -44,7 +44,7 @@ export const carAccessories: CategoryProducts = {
       "productFeatures": [
         "Ergonomic wedge design",
         "Coccyx cutout for relief",
-        "Breathable 3D mesh",
+        "Breathable 3D mesh",  
         "Anti-slip base"
       ],
       "productCost": 1299,

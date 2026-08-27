@@ -24,7 +24,7 @@ export const carCareDetailing: CategoryProducts = {
       "discountCoupon": null,
       "shippingInformation": "Check delivery availability at checkout",
       "longDescription": "Give your vehicle a professional-grade wash with the ShineXPro Foam Wash Shampoo Concentrate. Engineered to generate rich, thick foam, this shampoo effortlessly clings to vertical surfaces, breaking down stubborn mud, dust, and road grime. Its pH-balanced formula ensures absolute safety for your car's clear coat and wax layers while delivering a sparkling, streak-free shine. Ideal for both bucket washing and foam cannons, it offers exceptional value and performance for car owners who demand showroom-quality cleanliness at home.",
-      "category": "Car Accessories",
+      "category": "car-care-detailing",
       "images": [
         "/products/car-care-detailing/shinexpro-foam-wash-shampoo-concentrate/p (1).jpg",
         "/products/car-care-detailing/shinexpro-foam-wash-shampoo-concentrate/p (2).jpg",
@@ -53,7 +53,7 @@ export const carCareDetailing: CategoryProducts = {
       "discountCoupon": null,
       "shippingInformation": "Check delivery availability at checkout",
       "longDescription": "Keep your car cabin spotless with the Professional Interior Detailing Brush. Specifically built to target hard-to-reach areas like AC vents, dashboard crevices, and tight control panels, this tool features ultra-soft microfiber bristles that trap dust rather than scattering it. The extendable handle offers flexible operation, making detailed cleaning effortless. Safe on all plastic, leather, and piano-black finishes, it prevents micro-scratches while maintaining a pristine interior appearance. A must-have accessory for meticulous car detailing enthusiasts.",
-      "category": "Car Accessories",
+      "category": "car-care-detailing",
       "images": [
         "/products/car-care-detailing/microfiber-interior-detailing-brush/p (1).jpg",
         "/products/car-care-detailing/microfiber-interior-detailing-brush/p (2).jpg",
@@ -82,7 +82,7 @@ export const carCareDetailing: CategoryProducts = {
       "discountCoupon": null,
       "shippingInformation": "Check delivery availability at checkout",
       "longDescription": "The ONEROUS Portable Detailing Tool is an essential gadget for drivers looking to maintain a tidy vehicle environment. Designed for quick touch-ups, it effortlessly clears away dust, pet hair, and debris from seats, mats, and consoles. Its lightweight and compact form factor allows for convenient storage in your glove box or door pocket. Built with durable materials, it withstands regular use while providing precise cleaning performance across various interior surfaces. Enhance your daily driving comfort with this practical maintenance companion.",
-      "category": "Car Accessories",
+      "category": "car-care-detailing",
       "images": [
         "/products/car-care-detailing/onerious-portable-cleaning-tool/p (1).jpg",
         "/products/car-care-detailing/onerious-portable-cleaning-tool/p (2).jpg",
@@ -111,7 +111,7 @@ export const carCareDetailing: CategoryProducts = {
       "discountCoupon": "10% Coupon",
       "shippingInformation": "Check delivery availability at checkout",
       "longDescription": "Transform your vehicle maintenance routine with the Complete Car Cleaning Kit. This all-in-one package equips you with everything required to keep your car looking immaculate inside and out. Featuring an extendable duster for high roofs and large panels alongside high-absorbency detailing tools, it tackles dust, water spots, and surface grime with ease. Designed for convenience and efficiency, each item in the kit is crafted to protect your vehicle's finish while reducing cleaning time. Perfect for car owners who prefer comprehensive DIY detailing.",
-      "category": "Car Accessories",
+      "category": "car-care-detailing",
       "images": [
         "/products/car-care-detailing/complete-car-cleaning-kit/p (1).jpg",
         "/products/car-care-detailing/complete-car-cleaning-kit/p (2).jpg",
@@ -140,7 +140,7 @@ export const carCareDetailing: CategoryProducts = {
       "discountCoupon": null,
       "shippingInformation": "Check delivery availability at checkout",
       "longDescription": "Experience lightning-fast and streak-free drying with the CARFANATICS Twisted Loop Microfiber Cloth. Utilizing advanced twisted loop technology, this cloth absorbs massive amounts of water in a single pass, drastically cutting down drying time. The plush, high-density fibers glide smoothly across paintwork, glass, and chrome without leaving lint, swirls, or scratches behind. Finished with soft silk borders for added safety, it is the ultimate drying towel for professional detailers and passionate car owners alike.",
-      "category": "Car Accessories",
+      "category": "car-care-detailing",
       "images": [
         "/products/car-care-detailing/carfanatics-twisted-microfiber-cloth/p (1).jpg",
         "/products/car-care-detailing/carfanatics-twisted-microfiber-cloth/p (2).jpg",
@@ -169,7 +169,7 @@ export const carCareDetailing: CategoryProducts = {
       "discountCoupon": null,
       "shippingInformation": "Check delivery availability at checkout",
       "longDescription": "The ROTONIVA Cleaning and Detailing Accessories set brings together essential tools designed to elevate your car care regimen. Whether you are scrubbing tires, detailing wheel rims, or wiping down interior dashboards, this collection offers the right tool for every task. Constructed from durable, wear-resistant materials, these accessories ensure long-lasting utility. Their ergonomic design minimizes hand fatigue during extended cleaning sessions, making them a practical addition to any garage or trunk storage kit.",
-      "category": "Car Accessories",
+      "category": "car-care-detailing",
       "images": [
         "/products/car-care-detailing/rotoniva-cleaning-detailing-accessories/p (1).jpg",
         "/products/car-care-detailing/rotoniva-cleaning-detailing-accessories/p (2).jpg",
@@ -198,7 +198,7 @@ export const carCareDetailing: CategoryProducts = {
       "discountCoupon": "₹100 Off",
       "shippingInformation": "Check delivery availability at checkout",
       "longDescription": "Keep your car looking brand new with the Dashboard and Carnauba Care Kit. This curated combination targets both interior rejuvenation and exterior gloss enhancement. The dashboard cleaner restores original matte or glossy finishes while leaving behind a protective UV-resistant layer against fading. Paired with carnauba-infused wash products, it delivers deep gloss and hydrophobic water-beading protection to your vehicle's paintwork. Ideal for comprehensive weekend detailing sessions, this kit ensures professional results with minimal effort.",
-      "category": "Car Accessories",
+      "category": "car-care-detailing",
       "images": [
         "/products/car-care-detailing/dashboard-carnauba-washing-kit/p (1).jpg",
         "/products/car-care-detailing/dashboard-carnauba-washing-kit/p (2).jpg",
@@ -227,7 +227,7 @@ export const carCareDetailing: CategoryProducts = {
       "discountCoupon": null,
       "shippingInformation": "Check delivery availability at checkout",
       "longDescription": "Tackle the toughest cleaning challenges with the YOURKARTS Heavy-Duty Multi-Surface Vehicle Cleaner. Formulated to handle heavy industrial grime, dried mud, and road grease, this cleaner delivers powerful results on cars, SUVs, and commercial vehicles. Its active formula breaks down stubborn deposits quickly, reducing the scrubbing effort required during wash cycles. Safe for use on multiple exterior surfaces when used as directed, it helps restore a clean, professional finish to heavily soiled vehicles.",
-      "category": "Car Accessories",
+      "category": "car-care-detailing",
       "images": [
         "/products/car-care-detailing/yourkarts-truck-and-car-cleaner/p (1).jpg",
         "/products/car-care-detailing/yourkarts-truck-and-car-cleaner/p (2).jpg",
@@ -256,7 +256,7 @@ export const carCareDetailing: CategoryProducts = {
       "discountCoupon": null,
       "shippingInformation": "Check delivery availability at checkout",
       "longDescription": "Achieve an even, professional finish during interior detailing with the CAR SAAZ Dashboard and Upholstery Applicator Pad Set. These high-density foam pads are specifically designed to absorb and distribute dressings, conditioners, and protectants evenly across leather seats, vinyl dashes, and plastic trims without wasting product. The ergonomic shape fits comfortably in the hand, allowing for precise control during application. Washable and reusable, these pads provide exceptional durability and value for routine interior maintenance.",
-      "category": "Car Accessories",
+      "category": "car-care-detailing",
       "images": [
         "/products/car-care-detailing/car-saaz-dashboard-upholstery-applicator/p (1).jpg",
         "/products/car-care-detailing/car-saaz-dashboard-upholstery-applicator/p (2).jpg",
@@ -285,7 +285,7 @@ export const carCareDetailing: CategoryProducts = {
       "discountCoupon": "10% Coupon",
       "shippingInformation": "Check delivery availability at checkout",
       "longDescription": "Protect your vehicle's exterior investment with the Titanium Hydrophobic Detailing Protection coating. Engineered with advanced polymer technology, this spray creates an ultra-slick barrier that repels water, mud, and environmental contaminants with ease. It delivers a deep, mirror-like gloss while shielding your paint against harmful UV oxidation and fading. Quick and simple to apply, it provides long-lasting protection that keeps your car cleaner for longer and makes subsequent washes significantly faster.",
-      "category": "Car Accessories",
+      "category": "car-care-detailing",
       "images": [
         "/products/car-care-detailing/titanium-hydrophobic-protection-coating/p (1).jpg",
         "/products/car-care-detailing/titanium-hydrophobic-protection-coating/p (2).jpg",

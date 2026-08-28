@@ -53,6 +53,11 @@ export type InvestorRequest = Prisma.InvestorRequestModel
  */
 export type newsletterSubscription = Prisma.newsletterSubscriptionModel
 /**
+ * Model Messages
+ * 
+ */
+export type Messages = Prisma.MessagesModel
+/**
  * Model User
  * 
  */

@@ -58,6 +58,7 @@ export const ModelName = {
   PaymentAttempt: 'PaymentAttempt',
   InvestorRequest: 'InvestorRequest',
   newsletterSubscription: 'newsletterSubscription',
+  Messages: 'Messages',
   User: 'User',
   Category: 'Category',
   Product: 'Product',
@@ -195,6 +196,18 @@ export const NewsletterSubscriptionScalarFieldEnum = {
 } as const
 
 export type NewsletterSubscriptionScalarFieldEnum = (typeof NewsletterSubscriptionScalarFieldEnum)[keyof typeof NewsletterSubscriptionScalarFieldEnum]
+
+
+export const MessagesScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  message: 'message',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MessagesScalarFieldEnum = (typeof MessagesScalarFieldEnum)[keyof typeof MessagesScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {

@@ -5,9 +5,7 @@ import {
 } from '@nestjs/common';
 
 import { PrismaService } from '../../database/prisma/prisma.service';
-
 import { UpdateProfileDto } from './dto/update-profile.dto';
-
 import { StorageService } from '../storage/storage/storage.service';
 
 @Injectable()
@@ -15,7 +13,7 @@ export class ProfileService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly storageService: StorageService,
-  ) {}
+  ) { }
 
   async getProfile(userId: string) {
     const user = await this.prisma.users.findUnique({

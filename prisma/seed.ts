@@ -3,7 +3,7 @@ import 'dotenv/config';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
 import { PrismaClient } from '../src/generated/prisma/client';
-import hsnData from './hsn_sac_master.json';
+import hsnData from './HSN_SAC_MASTER.json';
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,

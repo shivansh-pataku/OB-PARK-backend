@@ -60,6 +60,7 @@ export const ModelName = {
   newsletterSubscription: 'newsletterSubscription',
   Messages: 'Messages',
   User: 'User',
+  TaxMaster: 'TaxMaster',
   Category: 'Category',
   Product: 'Product',
   Cart: 'Cart',
@@ -223,6 +224,16 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const TaxMasterScalarFieldEnum = {
+  code: 'code',
+  description: 'description',
+  type: 'type',
+  gstRate: 'gstRate'
+} as const
+
+export type TaxMasterScalarFieldEnum = (typeof TaxMasterScalarFieldEnum)[keyof typeof TaxMasterScalarFieldEnum]
+
+
 export const CategoryScalarFieldEnum = {
   id: 'id',
   categoryName: 'categoryName',
@@ -250,6 +261,7 @@ export const ProductScalarFieldEnum = {
   boughtPastMonthText: 'boughtPastMonthText',
   soldLastWeekText: 'soldLastWeekText',
   categoryId: 'categoryId',
+  taxCode: 'taxCode',
   attributes: 'attributes',
   aboutSections: 'aboutSections',
   shippingBadges: 'shippingBadges',

@@ -33,6 +33,7 @@ export class CartService {
         for (const item of cart.items) {
             try {
                 const product = this.productsService.getProductById(item.productId);
+                const itemPrice = Number(product.price ?? product.productCost ?? 0);
                 items.push({
                     id: item.id,
                     productId: item.productId,
@@ -41,13 +42,18 @@ export class CartService {
                     size: item.size,
                     product: {
                         id: product.id,
-                        name: product.title,
+                        productId: product.productId || item.productId,
+                        name: product.title || product.productName,
+                        title: product.title || product.productName,
                         brand: product.brand,
-                        price: Number(product.price),
+                        price: itemPrice,
+                        productCost: itemPrice,
+                        gstRate: Number(product.gstRate ?? 18),
                         imagePath: product.imagePath,
+                        images: product.images || [product.imagePath],
                     },
                 });
-                subtotal += Number(product.price) * item.quantity;
+                subtotal += itemPrice * item.quantity;
             } catch (err) {
                 console.error(`Product ${item.productId} not found:`, err);
             }

@@ -19,4 +19,4 @@ import { WebhookController } from './webhook/webhook.controller';
 
   exports: [PaymentService],
 })
-export class PaymentModule {}
+export class PaymentModule { }

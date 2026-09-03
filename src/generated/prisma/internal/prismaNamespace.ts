@@ -393,6 +393,7 @@ export const ModelName = {
   newsletterSubscription: 'newsletterSubscription',
   Messages: 'Messages',
   User: 'User',
+  TaxMaster: 'TaxMaster',
   Category: 'Category',
   Product: 'Product',
   Cart: 'Cart',
@@ -413,7 +414,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "users" | "order" | "orderItem" | "payment" | "paymentAttempt" | "investorRequest" | "newsletterSubscription" | "messages" | "user" | "category" | "product" | "cart" | "cartItem" | "address"
+    modelProps: "users" | "order" | "orderItem" | "payment" | "paymentAttempt" | "investorRequest" | "newsletterSubscription" | "messages" | "user" | "taxMaster" | "category" | "product" | "cart" | "cartItem" | "address"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1083,6 +1084,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    TaxMaster: {
+      payload: Prisma.$TaxMasterPayload<ExtArgs>
+      fields: Prisma.TaxMasterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TaxMasterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaxMasterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TaxMasterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaxMasterPayload>
+        }
+        findFirst: {
+          args: Prisma.TaxMasterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaxMasterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TaxMasterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaxMasterPayload>
+        }
+        findMany: {
+          args: Prisma.TaxMasterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaxMasterPayload>[]
+        }
+        create: {
+          args: Prisma.TaxMasterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaxMasterPayload>
+        }
+        createMany: {
+          args: Prisma.TaxMasterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TaxMasterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaxMasterPayload>[]
+        }
+        delete: {
+          args: Prisma.TaxMasterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaxMasterPayload>
+        }
+        update: {
+          args: Prisma.TaxMasterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaxMasterPayload>
+        }
+        deleteMany: {
+          args: Prisma.TaxMasterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TaxMasterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TaxMasterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaxMasterPayload>[]
+        }
+        upsert: {
+          args: Prisma.TaxMasterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaxMasterPayload>
+        }
+        aggregate: {
+          args: Prisma.TaxMasterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTaxMaster>
+        }
+        groupBy: {
+          args: Prisma.TaxMasterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TaxMasterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TaxMasterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TaxMasterCountAggregateOutputType> | number
+        }
+      }
+    }
     Category: {
       payload: Prisma.$CategoryPayload<ExtArgs>
       fields: Prisma.CategoryFieldRefs
@@ -1632,6 +1707,16 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const TaxMasterScalarFieldEnum = {
+  code: 'code',
+  description: 'description',
+  type: 'type',
+  gstRate: 'gstRate'
+} as const
+
+export type TaxMasterScalarFieldEnum = (typeof TaxMasterScalarFieldEnum)[keyof typeof TaxMasterScalarFieldEnum]
+
+
 export const CategoryScalarFieldEnum = {
   id: 'id',
   categoryName: 'categoryName',
@@ -1659,6 +1744,7 @@ export const ProductScalarFieldEnum = {
   boughtPastMonthText: 'boughtPastMonthText',
   soldLastWeekText: 'soldLastWeekText',
   categoryId: 'categoryId',
+  taxCode: 'taxCode',
   attributes: 'attributes',
   aboutSections: 'aboutSections',
   shippingBadges: 'shippingBadges',
@@ -2041,6 +2127,7 @@ export type GlobalOmitConfig = {
   newsletterSubscription?: Prisma.newsletterSubscriptionOmit
   messages?: Prisma.MessagesOmit
   user?: Prisma.UserOmit
+  taxMaster?: Prisma.TaxMasterOmit
   category?: Prisma.CategoryOmit
   product?: Prisma.ProductOmit
   cart?: Prisma.CartOmit

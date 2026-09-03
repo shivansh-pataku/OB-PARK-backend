@@ -12,12 +12,14 @@ export const bikeShop: CategoryProducts = {
       "productName": "Kratos B4 Bike Phone Holder",
       "productDescription": "A high-quality kratos b4 bike phone holder designed for enhanced comfort and protection during daily rides and long tours.",
       "productRating": 4.2,
-      "productFeatures": [ 
-        "Durable Material","Universal Fit","Weatherproof Build","Ergonomic Design"
+      "productFeatures": [
+        "Durable Material", "Universal Fit", "Weatherproof Build", "Ergonomic Design"
       ],
       "productCost": 400,
       "platformCharges": 5,
       "gst": 72,
+      "gstRate": 18,
+      "hsnCode": "871499",
       "discountCoupon": null,
       "shippingInformation": "Free Delivery",
       "longDescription": "Enhance your biking experience with the Kratos B4 Bike Phone Holder. Engineered for riders who value reliability and style, this product offers superior performance under varied road conditions. Whether for daily commutes or weekend expeditions, it ensures maximum functionality and protection. The design prioritizes user comfort, featuring premium materials that guarantee longevity. Easy to install or use, it seamlessly integrates with your existing motorcycle or bicycle setup. Discover the difference that quality accessories make to your safety and convenience on the road. OBPARK is dedicated to bringing you the best in biking gear.",
@@ -39,11 +41,13 @@ export const bikeShop: CategoryProducts = {
       "productDescription": "A high-quality portronics rotational phone holder designed for enhanced comfort and protection during daily rides and long tours.",
       "productRating": 4.2,
       "productFeatures": [
-        "Durable Material","Universal Fit","Weatherproof Build","Ergonomic Design"
+        "Durable Material", "Universal Fit", "Weatherproof Build", "Ergonomic Design"
       ],
       "productCost": 400,
       "platformCharges": 5,
       "gst": 72,
+      "gstRate": 18,
+      "hsnCode": "871499",
       "discountCoupon": null,
       "shippingInformation": "Free Delivery",
       "longDescription": "Enhance your biking experience with the Portronics Rotational Phone Holder. Engineered for riders who value reliability and style, this product offers superior performance under varied road conditions. Whether for daily commutes or weekend expeditions, it ensures maximum functionality and protection. The design prioritizes user comfort, featuring premium materials that guarantee longevity. Easy to install or use, it seamlessly integrates with your existing motorcycle or bicycle setup. Discover the difference that quality accessories make to your safety and convenience on the road. OBPARK is dedicated to bringing you the best in biking gear.",
@@ -65,11 +69,13 @@ export const bikeShop: CategoryProducts = {
       "productDescription": "A high-quality sounce hydrodock bike phone holder designed for enhanced comfort and protection during daily rides and long tours.",
       "productRating": 4.2,
       "productFeatures": [
-        "Durable Material","Universal Fit","Weatherproof Build","Ergonomic Design"
+        "Durable Material", "Universal Fit", "Weatherproof Build", "Ergonomic Design"
       ],
       "productCost": 400,
       "platformCharges": 5,
       "gst": 72,
+      "gstRate": 18,
+      "hsnCode": "871499",
       "discountCoupon": null,
       "shippingInformation": "Free Delivery",
       "longDescription": "Enhance your biking experience with the Sounce HydroDock Bike Phone Holder. Engineered for riders who value reliability and style, this product offers superior performance under varied road conditions. Whether for daily commutes or weekend expeditions, it ensures maximum functionality and protection. The design prioritizes user comfort, featuring premium materials that guarantee longevity. Easy to install or use, it seamlessly integrates with your existing motorcycle or bicycle setup. Discover the difference that quality accessories make to your safety and convenience on the road. OBPARK is dedicated to bringing you the best in biking gear.",
@@ -91,11 +97,13 @@ export const bikeShop: CategoryProducts = {
       "productDescription": "A high-quality autofy waterproof bike cover designed for enhanced comfort and protection during daily rides and long tours.",
       "productRating": 4.2,
       "productFeatures": [
-        "Durable Material","Universal Fit","Weatherproof Build","Ergonomic Design"
+        "Durable Material", "Universal Fit", "Weatherproof Build", "Ergonomic Design"
       ],
       "productCost": 800,
       "platformCharges": 5,
       "gst": 144,
+      "gstRate": 18,
+      "hsnCode": "870899",
       "discountCoupon": null,
       "shippingInformation": "Free Delivery",
       "longDescription": "Enhance your biking experience with the Autofy Waterproof Bike Cover. Engineered for riders who value reliability and style, this product offers superior performance under varied road conditions. Whether for daily commutes or weekend expeditions, it ensures maximum functionality and protection. The design prioritizes user comfort, featuring premium materials that guarantee longevity. Easy to install or use, it seamlessly integrates with your existing motorcycle or bicycle setup. Discover the difference that quality accessories make to your safety and convenience on the road. OBPARK is dedicated to bringing you the best in biking gear.",
@@ -117,11 +125,13 @@ export const bikeShop: CategoryProducts = {
       "productDescription": "A high-quality sulfar universal bike cover designed for enhanced comfort and protection during daily rides and long tours.",
       "productRating": 4.2,
       "productFeatures": [
-        "Durable Material","Universal Fit","Weatherproof Build","Ergonomic Design"
+        "Durable Material", "Universal Fit", "Weatherproof Build", "Ergonomic Design"
       ],
       "productCost": 800,
       "platformCharges": 5,
       "gst": 144,
+      "gstRate": 18,
+      "hsnCode": "870899",
       "discountCoupon": null,
       "shippingInformation": "Free Delivery",
       "longDescription": "Enhance your biking experience with the Sulfar Universal Bike Cover. Engineered for riders who value reliability and style, this product offers superior performance under varied road conditions. Whether for daily commutes or weekend expeditions, it ensures maximum functionality and protection. The design prioritizes user comfort, featuring premium materials that guarantee longevity. Easy to install or use, it seamlessly integrates with your existing motorcycle or bicycle setup. Discover the difference that quality accessories make to your safety and convenience on the road. OBPARK is dedicated to bringing you the best in biking gear.",
@@ -143,11 +153,13 @@ export const bikeShop: CategoryProducts = {
       "productDescription": "A high-quality tvs motorcycle helmet designed for enhanced comfort and protection during daily rides and long tours.",
       "productRating": 4.2,
       "productFeatures": [
-        "Durable Material","Universal Fit","Weatherproof Build","Ergonomic Design"
+        "Durable Material", "Universal Fit", "Weatherproof Build", "Ergonomic Design"
       ],
       "productCost": 1500,
       "platformCharges": 5,
       "gst": 270,
+      "gstRate": 18,
+      "hsnCode": "650610",
       "discountCoupon": null,
       "shippingInformation": "Free Delivery",
       "longDescription": "Enhance your biking experience with the TVS Motorcycle Helmet. Engineered for riders who value reliability and style, this product offers superior performance under varied road conditions. Whether for daily commutes or weekend expeditions, it ensures maximum functionality and protection. The design prioritizes user comfort, featuring premium materials that guarantee longevity. Easy to install or use, it seamlessly integrates with your existing motorcycle or bicycle setup. Discover the difference that quality accessories make to your safety and convenience on the road. OBPARK is dedicated to bringing you the best in biking gear.",
@@ -169,11 +181,13 @@ export const bikeShop: CategoryProducts = {
       "productDescription": "A high-quality vega motorcycle helmet designed for enhanced comfort and protection during daily rides and long tours.",
       "productRating": 4.2,
       "productFeatures": [
-        "Durable Material","Universal Fit","Weatherproof Build","Ergonomic Design"
+        "Durable Material", "Universal Fit", "Weatherproof Build", "Ergonomic Design"
       ],
       "productCost": 1500,
       "platformCharges": 5,
       "gst": 270,
+      "gstRate": 18,
+      "hsnCode": "650610",
       "discountCoupon": null,
       "shippingInformation": "Free Delivery",
       "longDescription": "Enhance your biking experience with the Vega Motorcycle Helmet. Engineered for riders who value reliability and style, this product offers superior performance under varied road conditions. Whether for daily commutes or weekend expeditions, it ensures maximum functionality and protection. The design prioritizes user comfort, featuring premium materials that guarantee longevity. Easy to install or use, it seamlessly integrates with your existing motorcycle or bicycle setup. Discover the difference that quality accessories make to your safety and convenience on the road. OBPARK is dedicated to bringing you the best in biking gear.",
@@ -195,11 +209,13 @@ export const bikeShop: CategoryProducts = {
       "productDescription": "A high-quality tvs motorcycle helmet designed for enhanced comfort and protection during daily rides and long tours.",
       "productRating": 4.2,
       "productFeatures": [
-        "Durable Material","Universal Fit","Weatherproof Build","Ergonomic Design"
+        "Durable Material", "Universal Fit", "Weatherproof Build", "Ergonomic Design"
       ],
       "productCost": 1500,
       "platformCharges": 5,
       "gst": 270,
+      "gstRate": 18,
+      "hsnCode": "650610",
       "discountCoupon": null,
       "shippingInformation": "Free Delivery",
       "longDescription": "Enhance your biking experience with the TVS Motorcycle Helmet. Engineered for riders who value reliability and style, this product offers superior performance under varied road conditions. Whether for daily commutes or weekend expeditions, it ensures maximum functionality and protection. The design prioritizes user comfort, featuring premium materials that guarantee longevity. Easy to install or use, it seamlessly integrates with your existing motorcycle or bicycle setup. Discover the difference that quality accessories make to your safety and convenience on the road. OBPARK is dedicated to bringing you the best in biking gear.",
@@ -221,11 +237,13 @@ export const bikeShop: CategoryProducts = {
       "productDescription": "A high-quality hyp3 certified motorcycle helmet designed for enhanced comfort and protection during daily rides and long tours.",
       "productRating": 4.2,
       "productFeatures": [
-        "Durable Material","Universal Fit","Weatherproof Build","Ergonomic Design"
+        "Durable Material", "Universal Fit", "Weatherproof Build", "Ergonomic Design"
       ],
       "productCost": 1500,
       "platformCharges": 5,
       "gst": 270,
+      "gstRate": 18,
+      "hsnCode": "650610",
       "discountCoupon": null,
       "shippingInformation": "Free Delivery",
       "longDescription": "Enhance your biking experience with the HYP3 Certified Motorcycle Helmet. Engineered for riders who value reliability and style, this product offers superior performance under varied road conditions. Whether for daily commutes or weekend expeditions, it ensures maximum functionality and protection. The design prioritizes user comfort, featuring premium materials that guarantee longevity. Easy to install or use, it seamlessly integrates with your existing motorcycle or bicycle setup. Discover the difference that quality accessories make to your safety and convenience on the road. OBPARK is dedicated to bringing you the best in biking gear.",
@@ -247,11 +265,13 @@ export const bikeShop: CategoryProducts = {
       "productDescription": "A high-quality xtrim protekt riding gloves designed for enhanced comfort and protection during daily rides and long tours.",
       "productRating": 4.2,
       "productFeatures": [
-        "Durable Material","Universal Fit","Weatherproof Build","Ergonomic Design"
+        "Durable Material", "Universal Fit", "Weatherproof Build", "Ergonomic Design"
       ],
       "productCost": 600,
       "platformCharges": 5,
       "gst": 108,
+      "gstRate": 18,
+      "hsnCode": "871499",
       "discountCoupon": null,
       "shippingInformation": "Free Delivery",
       "longDescription": "Enhance your biking experience with the XTRIM Protekt Riding Gloves. Engineered for riders who value reliability and style, this product offers superior performance under varied road conditions. Whether for daily commutes or weekend expeditions, it ensures maximum functionality and protection. The design prioritizes user comfort, featuring premium materials that guarantee longevity. Easy to install or use, it seamlessly integrates with your existing motorcycle or bicycle setup. Discover the difference that quality accessories make to your safety and convenience on the road. OBPARK is dedicated to bringing you the best in biking gear.",
@@ -273,11 +293,13 @@ export const bikeShop: CategoryProducts = {
       "productDescription": "A high-quality waterproof touchscreen winter gloves designed for enhanced comfort and protection during daily rides and long tours.",
       "productRating": 4.2,
       "productFeatures": [
-        "Durable Material","Universal Fit","Weatherproof Build","Ergonomic Design"
+        "Durable Material", "Universal Fit", "Weatherproof Build", "Ergonomic Design"
       ],
       "productCost": 600,
       "platformCharges": 5,
       "gst": 108,
+      "gstRate": 18,
+      "hsnCode": "871499",
       "discountCoupon": null,
       "shippingInformation": "Free Delivery",
       "longDescription": "Enhance your biking experience with the Waterproof Touchscreen Winter Gloves. Engineered for riders who value reliability and style, this product offers superior performance under varied road conditions. Whether for daily commutes or weekend expeditions, it ensures maximum functionality and protection. The design prioritizes user comfort, featuring premium materials that guarantee longevity. Easy to install or use, it seamlessly integrates with your existing motorcycle or bicycle setup. Discover the difference that quality accessories make to your safety and convenience on the road. OBPARK is dedicated to bringing you the best in biking gear.",
@@ -299,11 +321,13 @@ export const bikeShop: CategoryProducts = {
       "productDescription": "A high-quality zaysoo bike riding gloves designed for enhanced comfort and protection during daily rides and long tours.",
       "productRating": 4.2,
       "productFeatures": [
-        "Durable Material","Universal Fit","Weatherproof Build","Ergonomic Design"
+        "Durable Material", "Universal Fit", "Weatherproof Build", "Ergonomic Design"
       ],
       "productCost": 600,
       "platformCharges": 5,
       "gst": 108,
+      "gstRate": 18,
+      "hsnCode": "871499",
       "discountCoupon": null,
       "shippingInformation": "Free Delivery",
       "longDescription": "Enhance your biking experience with the ZaySoo Bike Riding Gloves. Engineered for riders who value reliability and style, this product offers superior performance under varied road conditions. Whether for daily commutes or weekend expeditions, it ensures maximum functionality and protection. The design prioritizes user comfort, featuring premium materials that guarantee longevity. Easy to install or use, it seamlessly integrates with your existing motorcycle or bicycle setup. Discover the difference that quality accessories make to your safety and convenience on the road. OBPARK is dedicated to bringing you the best in biking gear.",
@@ -325,11 +349,13 @@ export const bikeShop: CategoryProducts = {
       "productDescription": "A high-quality autofrill motorcycle balaclava designed for enhanced comfort and protection during daily rides and long tours.",
       "productRating": 4.2,
       "productFeatures": [
-        "Durable Material","Universal Fit","Weatherproof Build","Ergonomic Design"
+        "Durable Material", "Universal Fit", "Weatherproof Build", "Ergonomic Design"
       ],
       "productCost": 400,
       "platformCharges": 5,
       "gst": 72,
+      "gstRate": 18,
+      "hsnCode": "871499",
       "discountCoupon": null,
       "shippingInformation": "Free Delivery",
       "longDescription": "Enhance your biking experience with the AUTOFRILL Motorcycle Balaclava. Engineered for riders who value reliability and style, this product offers superior performance under varied road conditions. Whether for daily commutes or weekend expeditions, it ensures maximum functionality and protection. The design prioritizes user comfort, featuring premium materials that guarantee longevity. Easy to install or use, it seamlessly integrates with your existing motorcycle or bicycle setup. Discover the difference that quality accessories make to your safety and convenience on the road. OBPARK is dedicated to bringing you the best in biking gear.",
@@ -351,11 +377,13 @@ export const bikeShop: CategoryProducts = {
       "productDescription": "A high-quality boldfit cycling/motorcycle balaclava designed for enhanced comfort and protection during daily rides and long tours.",
       "productRating": 4.2,
       "productFeatures": [
-        "Durable Material","Universal Fit","Weatherproof Build","Ergonomic Design"
+        "Durable Material", "Universal Fit", "Weatherproof Build", "Ergonomic Design"
       ],
       "productCost": 400,
       "platformCharges": 5,
       "gst": 72,
+      "gstRate": 18,
+      "hsnCode": "871499",
       "discountCoupon": null,
       "shippingInformation": "Free Delivery",
       "longDescription": "Enhance your biking experience with the Boldfit Cycling/Motorcycle Balaclava. Engineered for riders who value reliability and style, this product offers superior performance under varied road conditions. Whether for daily commutes or weekend expeditions, it ensures maximum functionality and protection. The design prioritizes user comfort, featuring premium materials that guarantee longevity. Easy to install or use, it seamlessly integrates with your existing motorcycle or bicycle setup. Discover the difference that quality accessories make to your safety and convenience on the road. OBPARK is dedicated to bringing you the best in biking gear.",
@@ -377,11 +405,13 @@ export const bikeShop: CategoryProducts = {
       "productDescription": "A high-quality allextreme uv protection sleeves designed for enhanced comfort and protection during daily rides and long tours.",
       "productRating": 4.2,
       "productFeatures": [
-        "Durable Material","Universal Fit","Weatherproof Build","Ergonomic Design"
+        "Durable Material", "Universal Fit", "Weatherproof Build", "Ergonomic Design"
       ],
       "productCost": 400,
       "platformCharges": 5,
       "gst": 72,
+      "gstRate": 18,
+      "hsnCode": "871499",
       "discountCoupon": null,
       "shippingInformation": "Free Delivery",
       "longDescription": "Enhance your biking experience with the Allextreme UV Protection Sleeves. Engineered for riders who value reliability and style, this product offers superior performance under varied road conditions. Whether for daily commutes or weekend expeditions, it ensures maximum functionality and protection. The design prioritizes user comfort, featuring premium materials that guarantee longevity. Easy to install or use, it seamlessly integrates with your existing motorcycle or bicycle setup. Discover the difference that quality accessories make to your safety and convenience on the road. OBPARK is dedicated to bringing you the best in biking gear.",

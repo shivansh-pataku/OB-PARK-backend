@@ -85,6 +85,11 @@ export type Messages = Prisma.MessagesModel
  */
 export type User = Prisma.UserModel
 /**
+ * Model TaxMaster
+ * / HSN and SAC master table  ----------------------------------
+ */
+export type TaxMaster = Prisma.TaxMasterModel
+/**
  * Model Category
  * 
  */

@@ -22,7 +22,8 @@ export class ProductsService {
       // Map new properties to old property names for backward compatibility:
       title: product.productName,
       name: product.productName,
-      price: product.productCost,
+      basePrice: product.productCost,
+      price: Number(product.productCost),
       brand: (product as any).brand || '',
       imagePath: product.images && product.images[0] ? this.fixImagePaths(product.images[0]) : '',
       galleryImages: product.images ? product.images.map((img: string) => this.fixImagePaths(img)) : [],

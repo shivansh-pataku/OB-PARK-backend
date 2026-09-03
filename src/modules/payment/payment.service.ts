@@ -18,6 +18,9 @@ import {
   PaymentGateway,
 } from '../../generated/prisma/enums';
 
+import { pricingEngine, PricingItemInput } from './pricing-engine';
+import { CalculatePricingDto } from './dto/calculate-pricing.dto';
+
 @Injectable()
 export class PaymentService {
   constructor(
@@ -27,11 +30,72 @@ export class PaymentService {
     private readonly configService: ConfigService,
   ) {}
 
+  async calculatePricing(dto: CalculatePricingDto, user?: any) {
+    const itemsToPrice: PricingItemInput[] = [];
+
+    if (dto.productId) {
+      // 1. Single Product Buy Now Flow
+      try {
+        const product = this.productsService.getProductById(dto.productId);
+        if (product) {
+          itemsToPrice.push({ product, quantity: dto.quantity || 1 });
+        }
+      } catch (err) {
+        throw new BadRequestException(`Product with ID "${dto.productId}" not found`);
+      }
+    } else if (dto.items && dto.items.length > 0) {
+      // 2. Explicit items list passed
+      for (const it of dto.items) {
+        try {
+          const product = this.productsService.getProductById(it.productId);
+          if (product) {
+            itemsToPrice.push({ product, quantity: it.quantity || 1 });
+          }
+        } catch (err) {
+          // ignore or continue
+        }
+      }
+    } else if (user && user.sub) {
+      // 3. User Cart from database
+      const cart = await this.prisma.cart.findUnique({
+        where: { userId: user.sub },
+        include: { items: true },
+      });
+
+      if (cart && cart.items && cart.items.length > 0) {
+        for (const item of cart.items) {
+          try {
+            const product = this.productsService.getProductById(item.productId);
+            if (product) {
+              itemsToPrice.push({ product, quantity: item.quantity });
+            }
+          } catch (err) {
+            // skip missing product
+          }
+        }
+      }
+    }
+
+    const pricing = pricingEngine(itemsToPrice, {
+      couponCode: dto.couponCode,
+    });
+
+    const isCouponApplied = Boolean(
+      dto.couponCode && pricing.discount > 0,
+    );
+
+    return {
+      ...pricing,
+      appliedCoupon: isCouponApplied && dto.couponCode ? dto.couponCode.trim().toUpperCase() : null,
+      couponDiscount: pricing.discount,
+      itemCount: itemsToPrice.reduce((acc, it) => acc + (it.quantity || 1), 0),
+    };
+  }
+
   async createPayment(dto: CreatePaymentDto, user: any) {
     const userId = user.sub;
 
-    let subtotal = 0;
-    const orderItems: any[] = [];
+    const itemsToPrice: PricingItemInput[] = [];
 
     if (dto.productId) {
       // 1. Fetch Product for single checkout
@@ -39,17 +103,7 @@ export class PaymentService {
       if (!product) {
         throw new BadRequestException('Product not found');
       }
-      const qty = dto.quantity || 1;
-      const itemSubtotal = Number(product.price) * qty;
-      subtotal = itemSubtotal;
-      orderItems.push({
-        productId: product.productId || String(product.id),
-        productName: product.title,
-        productImage: product.imagePath,
-        quantity: qty,
-        unitPrice: product.price,
-        totalPrice: itemSubtotal,
-      });
+      itemsToPrice.push({ product, quantity: dto.quantity || 1 });
     } else {
       // 2. Fetch User's Cart from database
       const cart = await this.prisma.cart.findUnique({
@@ -65,51 +119,46 @@ export class PaymentService {
         if (!product) {
           throw new BadRequestException(`Product ${item.productId} not found`);
         }
-        const itemPrice = Number(product.price);
-        const itemSubtotal = itemPrice * item.quantity;
-        subtotal += itemSubtotal;
-        orderItems.push({
-          productId: product.productId || String(product.id),
-          productName: product.title,
-          productImage: product.imagePath,
-          quantity: item.quantity,
-          unitPrice: product.price,
-          totalPrice: itemSubtotal,
-        });
+        itemsToPrice.push({ product, quantity: item.quantity });
       }
     }
 
-    // 3. Pricing calculations
-    let discount = 0;
-    if (dto.couponCode === 'SAVE100') {
-      discount = Math.min(100, subtotal);
-    }
+    // 3. Centralized Pricing Calculation via pricingEngine
+    const pricing = pricingEngine(itemsToPrice, {
+      couponCode: dto.couponCode,
+    });
 
-    const tax = 0;
-    const shippingCharge = 0;
-    const totalAmount = subtotal - discount + tax + shippingCharge;
     const orderNumber = `OP-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    const dbOrderItems = pricing.orderItems.map((item) => ({
+      productId: item.productId,
+      productName: item.productName,
+      productImage: item.productImage,
+      quantity: item.quantity,
+      unitPrice: item.unitPrice,
+      totalPrice: item.totalPrice,
+    }));
 
     // 4. Create Order and OrderItems in the database
     const order = await this.prisma.order.create({
       data: {
         orderNumber,
         userId,
-        subtotal,
-        discount,
-        tax,
-        shippingCharge,
-        totalAmount,
+        subtotal: pricing.subtotal,
+        discount: pricing.discount,
+        tax: pricing.tax,
+        shippingCharge: pricing.shippingCharge,
+        totalAmount: pricing.totalAmount,
         currency: 'INR',
         status: OrderStatus.PENDING,
         items: {
-          create: orderItems,
+          create: dbOrderItems,
         },
       },
     });
 
     // 5. Create payment order on gateway (Razorpay expects amount in paise)
-    const amountInPaise = Math.round(totalAmount * 100);
+    const amountInPaise = Math.round(pricing.totalAmount * 100);
     let gatewayOrderId: string | null = null;
 
     if (dto.gateway === PaymentGateway.RAZORPAY) {
@@ -127,7 +176,7 @@ export class PaymentService {
         orderId: order.id,
         userId,
         gateway: dto.gateway,
-        amount: totalAmount,
+        amount: pricing.totalAmount,
         currency: 'INR',
         status: PaymentStatus.PENDING,
         gatewayOrderId,
